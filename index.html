@@ -16,6 +16,7 @@
   --amber: #f59e0b;
   --red: #ef4444;
   --blue: #3b82f6;
+  --purple: #8b5cf6;
   --text: #e2e8f0;
   --muted: #64748b;
   --script-bg: #091410;
@@ -23,7 +24,6 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; font-size:15px; min-height:100vh; }
 
-/* HEADER */
 .header { display:flex; align-items:center; justify-content:space-between; padding:0 28px; height:62px; border-bottom:1px solid var(--border); background:var(--surface); position:sticky; top:0; z-index:100; }
 .logo { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--green); letter-spacing:-.5px; }
 .logo span { color:var(--text); }
@@ -32,36 +32,29 @@ body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif
 .nav-tab.active { background:var(--surface2); color:var(--text); }
 .nav-tab:hover:not(.active) { color:var(--text); }
 
-/* VIEWS */
 .view { display:none; }
 .view.active { display:block; }
 
-/* SDR LAYOUT */
 .sdr-layout { max-width:780px; margin:0 auto; padding:32px 20px 80px; }
 
-/* Progress */
 .progress-wrap { display:flex; align-items:center; gap:12px; margin-bottom:36px; }
 .progress-track { flex:1; height:3px; background:var(--border); border-radius:2px; overflow:hidden; }
 .progress-fill { height:100%; background:var(--green); border-radius:2px; transition:width .4s ease; }
 .progress-label { font-family:'DM Mono',monospace; font-size:12px; color:var(--muted); white-space:nowrap; min-width:60px; text-align:right; }
 
-/* Step header */
 .step-badge { display:inline-flex; align-items:center; gap:6px; padding:3px 12px; background:rgba(22,199,132,.1); border:1px solid rgba(22,199,132,.25); border-radius:100px; font-family:'DM Mono',monospace; font-size:11px; color:var(--green); text-transform:uppercase; letter-spacing:.5px; margin-bottom:10px; }
 .step-title { font-family:'Syne',sans-serif; font-size:25px; font-weight:700; color:var(--text); line-height:1.2; margin-bottom:4px; }
 .step-duration { font-size:13px; color:var(--muted); margin-bottom:24px; }
 
-/* Script block */
 .script-block { background:var(--script-bg); border:1px solid rgba(22,199,132,.22); border-left:3px solid var(--green); border-radius:8px; padding:20px; margin-bottom:18px; }
 .script-label { font-family:'DM Mono',monospace; font-size:10px; font-weight:500; color:var(--green); letter-spacing:1px; display:block; margin-bottom:10px; }
 .script-text { font-size:15px; line-height:1.8; color:#9ecfb0; font-style:italic; }
 .script-text strong { color:var(--text); font-style:normal; font-weight:600; }
 
-/* Info block */
 .info-block { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin-bottom:18px; font-size:14px; color:var(--muted); line-height:1.6; }
 .info-block.warn { background:rgba(245,158,11,.07); border-color:rgba(245,158,11,.3); color:#fcd34d; }
 .info-block.danger { background:rgba(239,68,68,.07); border-color:rgba(239,68,68,.3); color:#fca5a5; }
 
-/* Form */
 .field-group { margin-bottom:18px; }
 .field-label { display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:7px; }
 .field-input, .field-select { width:100%; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:11px 15px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color .2s; }
@@ -70,7 +63,6 @@ body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif
 .field-textarea { resize:vertical; min-height:96px; }
 .field-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
 
-/* Options */
 .option-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 .option-btn { padding:12px; background:var(--surface); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; transition:all .2s; text-align:center; }
 .option-btn:hover { border-color:var(--green); background:rgba(22,199,132,.05); }
@@ -78,11 +70,9 @@ body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif
 .option-btn.sel-danger { border-color:var(--red); background:rgba(239,68,68,.12); color:var(--red); }
 .option-btn.sel-warn { border-color:var(--amber); background:rgba(245,158,11,.12); color:var(--amber); }
 
-/* Conditional */
 .cond { display:none; margin-top:14px; }
 .cond.show { display:block; }
 
-/* Nav */
 .step-nav { display:flex; gap:12px; margin-top:32px; }
 .btn { padding:12px 26px; border-radius:8px; border:none; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600; cursor:pointer; transition:all .2s; }
 .btn-primary { background:var(--green); color:#000; flex:1; }
@@ -91,6 +81,17 @@ body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif
 .btn-secondary:hover { color:var(--text); }
 .btn-red { background:var(--red); color:#fff; flex:1; }
 .btn-red:hover { background:#dc2626; }
+
+/* BANT BADGE */
+.bant-row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:20px; }
+.bant-item { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; text-align:center; }
+.bant-letter { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; margin-bottom:4px; }
+.bant-name { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+.bant-status { font-size:11px; font-weight:600; padding:3px 8px; border-radius:20px; display:inline-block; }
+.bant-ok { color:var(--green); background:rgba(22,199,132,.12); }
+.bant-warn { color:var(--amber); background:rgba(245,158,11,.12); }
+.bant-no { color:var(--red); background:rgba(239,68,68,.12); }
+.bant-desc { font-size:12px; color:var(--muted); margin-top:6px; line-height:1.4; }
 
 /* ENCERRAR SCREEN */
 .encerrar-screen { max-width:640px; margin:0 auto; padding:60px 20px; text-align:center; }
@@ -116,7 +117,28 @@ body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif
 .r-card-value.a { color:var(--amber); }
 .r-card-value.r { color:var(--red); }
 
-/* Action block */
+/* DIAGNÓSTICO EXPLICATIVO */
+.diagnostico-block { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:22px; margin-bottom:18px; }
+.diagnostico-block h3 { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; margin-bottom:16px; }
+.diag-section { margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+.diag-section:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.diag-section-label { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px; }
+.diag-section-text { font-size:14px; color:var(--text); line-height:1.7; }
+.diag-section-text.warn { color:#fcd34d; }
+.diag-section-text.danger { color:#fca5a5; }
+.diag-section-text.ok { color:var(--green); }
+
+/* ALERTAS */
+.alertas-block { background:rgba(245,158,11,.06); border:1px solid rgba(245,158,11,.3); border-radius:10px; padding:22px; margin-bottom:18px; }
+.alertas-block h3 { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:var(--amber); margin-bottom:16px; }
+.alerta-item { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(245,158,11,.15); font-size:13px; line-height:1.6; }
+.alerta-item:last-child { border-bottom:none; }
+.alerta-item.critico { color:#fca5a5; }
+.alerta-item.suspeito { color:#fcd34d; }
+.alerta-sev { font-family:'DM Mono',monospace; font-size:10px; font-weight:700; padding:2px 7px; border-radius:4px; white-space:nowrap; flex-shrink:0; margin-top:2px; }
+.sev-critico { background:rgba(239,68,68,.2); color:#fca5a5; }
+.sev-suspeito { background:rgba(245,158,11,.2); color:#fcd34d; }
+
 .action-block { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:22px; margin-bottom:18px; }
 .action-block h3 { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; margin-bottom:14px; }
 .action-list { list-style:none; }
@@ -166,19 +188,21 @@ tr:hover td { background:rgba(255,255,255,.015); }
 .empty-state .es-icon { font-size:48px; margin-bottom:12px; }
 .empty-state p { font-size:14px; }
 .motivo-cell { max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--muted); font-size:12px; }
-
-/* Chance bar */
 .cbar { display:inline-block; width:60px; height:5px; background:var(--border); border-radius:3px; overflow:hidden; vertical-align:middle; margin-left:6px; }
 .cbar-fill { height:100%; border-radius:3px; }
-
-/* Alert inline */
 .alert-inline { display:flex; align-items:flex-start; gap:10px; background:rgba(245,158,11,.08); border:1px solid rgba(245,158,11,.25); border-radius:8px; padding:14px; margin-top:14px; font-size:13px; color:#fcd34d; line-height:1.6; }
 .alert-inline.red { background:rgba(239,68,68,.08); border-color:rgba(239,68,68,.25); color:#fca5a5; }
+
+/* Capacidade de pagamento indicator */
+.cap-pagamento { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin-top:12px; }
+.cap-pagamento-label { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; }
+.cap-bar-wrap { height:6px; background:var(--border); border-radius:3px; overflow:hidden; margin-bottom:8px; }
+.cap-bar { height:100%; border-radius:3px; transition:width .4s; }
+.cap-text { font-size:13px; line-height:1.5; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="logo">GFB<span> · SDR IA</span></div>
   <div class="nav-tabs">
@@ -187,18 +211,14 @@ tr:hover td { background:rgba(255,255,255,.015); }
   </div>
 </div>
 
-<!-- ══════════════ SDR VIEW ══════════════ -->
 <div id="view-sdr" class="view active">
-
-  <!-- WIZARD STEPS (will be shown/hidden by JS) -->
   <div id="wizard-steps" class="sdr-layout">
 
-    <!-- Step 0: Identificação -->
+    <!-- Step 0 -->
     <div class="step" id="step-0">
       <div class="step-badge">Antes de começar</div>
       <div class="step-title">Identificação do Lead</div>
       <div class="step-duration">Preencha antes de iniciar a ligação</div>
-
       <div class="field-row">
         <div class="field-group">
           <label class="field-label">Nome do Lead *</label>
@@ -222,70 +242,51 @@ tr:hover td { background:rgba(255,255,255,.015); }
           <option value="Funil Webinário Frio — +40K">Funil Webinário Frio — +40K</option>
         </select>
       </div>
-
       <div class="step-nav">
         <button class="btn btn-primary" onclick="nextStep(0)">Iniciar Script →</button>
       </div>
     </div>
 
-    <!-- Step 1: Saudação -->
+    <!-- Step 1 -->
     <div class="step" id="step-1" style="display:none">
       <div class="step-badge">Passo 1.1</div>
       <div class="step-title">Saudação Inicial</div>
       <div class="step-duration">⏱ 30 segundos</div>
-
       <div class="script-block">
         <span class="script-label">🎙 FALE ISSO</span>
-        <div class="script-text">
-          <strong id="lead-nome-s1">[Nome do candidato]</strong>?<br><br>
-          Aqui é o <strong>[Seu nome]</strong>. Como você está? Tudo bem?<br><br>
-          Vamos começar a nossa entrevista, então. Será uma conversa bem rápida.
-        </div>
+        <div class="script-text"><strong id="lead-nome-s1">[Nome do candidato]</strong>?<br><br>Aqui é o <strong>[Seu nome]</strong>. Como você está? Tudo bem?<br><br>Vamos começar a nossa entrevista, então. Será uma conversa bem rápida.</div>
       </div>
-
-      <div class="info-block">
-        💡 Início de conversa cordial e objetivo, já dando uma prévia de tempo que a conversa vai demorar. Tom confiante e animado.
-      </div>
-
+      <div class="info-block">💡 Início de conversa cordial e objetivo, já dando uma prévia de tempo que a conversa vai demorar. Tom confiante e animado.</div>
       <div class="step-nav">
         <button class="btn btn-secondary" onclick="prevStep(1)">← Voltar</button>
         <button class="btn btn-primary" onclick="nextStep(1)">Próximo →</button>
       </div>
     </div>
 
-    <!-- Step 2: Objetivo -->
+    <!-- Step 2 -->
     <div class="step" id="step-2" style="display:none">
       <div class="step-badge">Passo 1.2</div>
       <div class="step-title">Objetivo da Ligação</div>
       <div class="step-duration">⏱ ~1 minuto</div>
-
       <div class="script-block">
         <span class="script-label">🎙 FALE ISSO</span>
-        <div class="script-text">
-          O objetivo dessa ligação é entender melhor o seu negócio e o seu desafio e analisarmos juntos se você tem o perfil de empresa que eu estou buscando para receber <strong>1 hora de consultoria gratuita</strong>.<br><br>
-          Se eu entender que você tem o perfil, eu vou passar você para a próxima fase do nosso processo, que é uma <strong>reunião de 1 hora em vídeo-conferência</strong> com nosso especialista para te ajudar — e caso seja viável, que não é o foco inicial, apresentaremos uma solução.
-        </div>
+        <div class="script-text">O objetivo dessa ligação é entender melhor o seu negócio e o seu desafio e analisarmos juntos se você tem o perfil de empresa que eu estou buscando para receber <strong>1 hora de consultoria gratuita</strong>.<br><br>Se eu entender que você tem o perfil, eu vou passar você para a próxima fase do nosso processo, que é uma <strong>reunião de 1 hora em vídeo-conferência</strong> com nosso especialista para te ajudar — e caso seja viável, que não é o foco inicial, apresentaremos uma solução.</div>
       </div>
-
       <div class="step-nav">
         <button class="btn btn-secondary" onclick="prevStep(2)">← Voltar</button>
         <button class="btn btn-primary" onclick="nextStep(2)">Próximo →</button>
       </div>
     </div>
 
-    <!-- Step 3: Autoridade -->
+    <!-- Step 3 -->
     <div class="step" id="step-3" style="display:none">
       <div class="step-badge">Passo 1.3</div>
       <div class="step-title">Gerar Autoridade</div>
       <div class="step-duration">⏱ ~1 minuto</div>
-
       <div class="script-block">
         <span class="script-label">🎙 PERGUNTA PRIMEIRO</span>
-        <div class="script-text">
-          Você já <strong>conhece o Eduardo Lustosa, Ultra Academia ou Gestão Fitness Brasil</strong>?
-        </div>
+        <div class="script-text">Você já <strong>conhece o Eduardo Lustosa, Ultra Academia ou Gestão Fitness Brasil</strong>?</div>
       </div>
-
       <div class="field-group">
         <label class="field-label">Resposta do Lead</label>
         <div class="option-grid">
@@ -293,56 +294,38 @@ tr:hover td { background:rgba(255,255,255,.015); }
           <button class="option-btn" id="opt-conhece-nao" onclick="setOpt('conhece','nao')">❌ Não conhece</button>
         </div>
       </div>
-
       <div class="cond" id="cond-conhece-nao">
         <div class="script-block">
           <span class="script-label">🎙 SE NÃO CONHECE — FALE ISSO</span>
-          <div class="script-text">
-            Ok. Deixe eu me apresentar brevemente para você entender o que a gente faz.<br><br>
-            Talvez você já tenha ouvido falar da gente, mas provavelmente não nos conhece. Deixe me apresentar rapidamente para você.<br><br>
-            Eu sou o <strong>consultor de relacionamento</strong> aqui da <strong>Gestão Fitness Brasil do time do Eduardo Lustosa</strong>. Nós saímos de 300 para <strong>+7.000 alunos</strong> e hoje ensinamos academias de todo o Brasil como aplicar exatamente essa metodologia. O próprio Eduardo que fundou é <strong>parceiro oficial do Sebrae</strong>, possui vários prêmios empresariais, é um dos principais responsáveis pela expansão da <strong>Rede Ultra Academia</strong> em todo o Brasil, além de ser faixa preta em jiu-jitsu e empreender há mais de 15 anos. Nós já ajudamos mais de <strong>1.000 empresários</strong> nesses últimos anos.<br><br>
-            O Eduardo tem bom relacionamento com <strong>Conrado Adolpho, Alfredo Soares da G4</strong> (inclusive participou do podcast da G4) e está no grupo da MLS que foi fundado por <strong>Flávio Augusto, Joel Jota e Caio Carneiro</strong>.
-          </div>
+          <div class="script-text">Ok. Deixe eu me apresentar brevemente para você entender o que a gente faz.<br><br>Eu sou o <strong>consultor de relacionamento</strong> aqui da <strong>Gestão Fitness Brasil do time do Eduardo Lustosa</strong>. Nós saímos de 300 para <strong>+7.000 alunos</strong> e hoje ensinamos academias de todo o Brasil como aplicar exatamente essa metodologia. O próprio Eduardo que fundou é <strong>parceiro oficial do Sebrae</strong>, possui vários prêmios empresariais, é um dos principais responsáveis pela expansão da <strong>Rede Ultra Academia</strong> em todo o Brasil. Nós já ajudamos mais de <strong>1.000 empresários</strong> nesses últimos anos.<br><br>O Eduardo tem bom relacionamento com <strong>Conrado Adolpho, Alfredo Soares da G4</strong> e está no grupo da MLS fundado por <strong>Flávio Augusto, Joel Jota e Caio Carneiro</strong>.</div>
         </div>
       </div>
-
       <div class="cond" id="cond-conhece-sim">
         <div class="script-block">
           <span class="script-label">🎙 SE JÁ CONHECE — FALE ISSO</span>
-          <div class="script-text">
-            Que ótimo! Então você já sabe um pouco do que a gente faz. Vamos em frente com a entrevista!
-          </div>
+          <div class="script-text">Que ótimo! Então você já sabe um pouco do que a gente faz. Vamos em frente com a entrevista!</div>
         </div>
       </div>
-
       <div class="step-nav">
         <button class="btn btn-secondary" onclick="prevStep(3)">← Voltar</button>
         <button class="btn btn-primary" onclick="nextStep(3)">Próximo →</button>
       </div>
     </div>
 
-    <!-- Step 4: Negócio -->
+    <!-- Step 4 -->
     <div class="step" id="step-4" style="display:none">
       <div class="step-badge">Passo 1.4 — Qualificação</div>
       <div class="step-title">Me fala do seu negócio</div>
       <div class="step-duration">⏱ Parte 1 das perguntas de qualificação</div>
-
       <div class="script-block">
         <span class="script-label">🎙 FALE ISSO</span>
-        <div class="script-text">
-          Me fala um pouco do seu negócio.
-        </div>
+        <div class="script-text">Me fala um pouco do seu negócio.</div>
       </div>
-
-      <div class="info-block">
-        💡 Pergunta aberta de situação para entender o contexto da empresa. Deixe o lead falar. Anote os pontos mais importantes abaixo.
-      </div>
-
+      <div class="info-block">💡 Pergunta aberta de situação para entender o contexto da empresa. Deixe o lead falar. Anote os pontos mais importantes abaixo.</div>
       <div class="field-group">
-        <label class="field-label">✍️ ANOTE — Descrição do negócio (escreva com suas palavras)</label>
-        <textarea class="field-input field-textarea" id="f-negocio" placeholder="Ex: Academia de 5 anos, 400 alunos, foco em musculação e aulas coletivas, 3 unidades em Goiânia..."></textarea>
+        <label class="field-label">✍️ ANOTE — Descrição do negócio</label>
+        <textarea class="field-input field-textarea" id="f-negocio" placeholder="Ex: Academia de 5 anos, 400 alunos, foco em musculação, ticket médio R$120, 3 funcionários..."></textarea>
       </div>
-
       <div class="step-nav">
         <button class="btn btn-secondary" onclick="prevStep(4)">← Voltar</button>
         <button class="btn btn-primary" onclick="nextStep(4)">Próximo →</button>
@@ -351,24 +334,19 @@ tr:hover td { background:rgba(255,255,255,.015); }
 
     <!-- Step 5: Faturamento -->
     <div class="step" id="step-5" style="display:none">
-      <div class="step-badge">Passo 1.4 — Qualificação</div>
+      <div class="step-badge">Passo 1.4 — BANT · Budget</div>
       <div class="step-title">Faturamento Mensal</div>
-      <div class="step-duration">⏱ Pergunta de capacidade de pagamento</div>
-
+      <div class="step-duration">⏱ B de BANT — Orçamento disponível</div>
       <div class="script-block">
         <span class="script-label">🎙 FALE ISSO</span>
-        <div class="script-text">
-          Qual o <strong>faturamento médio mensal</strong> da sua empresa?
-        </div>
+        <div class="script-text">Qual o <strong>faturamento médio mensal</strong> da sua empresa?</div>
       </div>
-
       <div class="info-block">
-        💡 Esse número é importante para medir a capacidade de pagamento do candidato. Se o faturamento for muito baixo, ele não vai conseguir arcar com o investimento do programa (a não ser que a margem de lucro seja muito alta).
+        💡 <strong>Budget (B do BANT):</strong> O faturamento é a base para calcular se o lead tem capacidade real de pagamento. Um faturamento alto com margem boa é o cenário ideal. Faturamento baixo com margem baixa é sinal de alerta crítico — mesmo que queira, não conseguirá pagar.
       </div>
-
       <div class="field-group">
         <label class="field-label">✍️ Faturamento Médio Mensal (R$)</label>
-        <select class="field-select" id="f-faturamento">
+        <select class="field-select" id="f-faturamento" onchange="updateCapBar()">
           <option value="">Selecione a faixa...</option>
           <option value="10000">Até R$ 10.000</option>
           <option value="20000">R$ 10.001 a R$ 20.000</option>
@@ -380,7 +358,11 @@ tr:hover td { background:rgba(255,255,255,.015); }
           <option value="300000">Acima de R$ 200.000</option>
         </select>
       </div>
-
+      <div id="fat-feedback" style="display:none" class="cap-pagamento">
+        <div class="cap-pagamento-label">Sinal de capacidade de pagamento</div>
+        <div class="cap-bar-wrap"><div id="fat-bar" class="cap-bar"></div></div>
+        <div id="fat-text" class="cap-text"></div>
+      </div>
       <div class="step-nav">
         <button class="btn btn-secondary" onclick="prevStep(5)">← Voltar</button>
         <button class="btn btn-primary" onclick="nextStep(5)">Próximo →</button>
@@ -389,24 +371,19 @@ tr:hover td { background:rgba(255,255,255,.015); }
 
     <!-- Step 6: Margem -->
     <div class="step" id="step-6" style="display:none">
-      <div class="step-badge">Passo 1.4 — Qualificação</div>
+      <div class="step-badge">Passo 1.4 — BANT · Budget</div>
       <div class="step-title">Margem de Lucro</div>
-      <div class="step-duration">⏱ Capacidade de pagamento</div>
-
+      <div class="step-duration">⏱ Capacidade de pagamento real</div>
       <div class="script-block">
         <span class="script-label">🎙 FALE ISSO</span>
-        <div class="script-text">
-          Qual tem sido sua <strong>margem de lucro</strong>?
-        </div>
+        <div class="script-text">Qual tem sido sua <strong>margem de lucro</strong>? Em média, quanto sobra de lucro líquido do que você fatura?</div>
       </div>
-
       <div class="info-block">
-        💡 Não adianta ter faturamento bom se a margem é muito baixa. Esse número também mede a capacidade real de pagamento.
+        💡 Faturamento sem margem não paga nada. O lucro mensal dividido pelo valor do programa = número de meses para pagar. Se mesesParaPagar &gt; 3 = risco alto. Anote a margem com precisão.
       </div>
-
       <div class="field-group">
         <label class="field-label">✍️ Margem de Lucro (%)</label>
-        <select class="field-select" id="f-margem">
+        <select class="field-select" id="f-margem" onchange="updateCapBar()">
           <option value="">Selecione a faixa...</option>
           <option value="5">Abaixo de 10% (margem muito baixa)</option>
           <option value="15">10% a 20%</option>
@@ -415,7 +392,11 @@ tr:hover td { background:rgba(255,255,255,.015); }
           <option value="50">Acima de 40% (margem excelente)</option>
         </select>
       </div>
-
+      <div id="cap-feedback" style="display:none" class="cap-pagamento">
+        <div class="cap-pagamento-label">Análise de capacidade de pagamento</div>
+        <div class="cap-bar-wrap"><div id="cap-bar" class="cap-bar"></div></div>
+        <div id="cap-text" class="cap-text"></div>
+      </div>
       <div class="step-nav">
         <button class="btn btn-secondary" onclick="prevStep(6)">← Voltar</button>
         <button class="btn btn-primary" onclick="nextStep(6)">Próximo →</button>
@@ -424,17 +405,13 @@ tr:hover td { background:rgba(255,255,255,.015); }
 
     <!-- Step 7: Endividamento -->
     <div class="step" id="step-7" style="display:none">
-      <div class="step-badge">Passo 1.4 — Qualificação</div>
+      <div class="step-badge">Passo 1.4 — BANT · Budget</div>
       <div class="step-title">Fluxo de Caixa & Endividamento</div>
       <div class="step-duration">⏱ Ponto crítico de qualificação</div>
-
       <div class="script-block">
         <span class="script-label">🎙 FALE ISSO</span>
-        <div class="script-text">
-          Sobra isso mesmo no fim do mês ou tem <strong>endividamento</strong>?
-        </div>
+        <div class="script-text">Sobra isso mesmo no fim do mês ou tem <strong>endividamento</strong>?</div>
       </div>
-
       <div class="field-group">
         <label class="field-label">✍️ Situação financeira</label>
         <div class="option-grid">
@@ -442,16 +419,11 @@ tr:hover td { background:rgba(255,255,255,.015); }
           <button class="option-btn" id="opt-divida-sim" onclick="setOpt('divida','sim')">⚠️ Tem endividamento</button>
         </div>
       </div>
-
-      <!-- Se tem dívida -->
       <div class="cond" id="cond-divida-sim">
         <div class="script-block">
           <span class="script-label">🎙 SE TEM ENDIVIDAMENTO — FALE ISSO</span>
-          <div class="script-text">
-            Mas seu fluxo de caixa está <strong>positivo ou negativo</strong>? Quer dizer, você está tendo lucro ou prejuízo no mês a mês?
-          </div>
+          <div class="script-text">Mas seu fluxo de caixa está <strong>positivo ou negativo</strong>? Quer dizer, você está tendo lucro ou prejuízo no mês a mês?</div>
         </div>
-
         <div class="field-group">
           <label class="field-label">✍️ Fluxo de Caixa</label>
           <div class="option-grid">
@@ -459,18 +431,11 @@ tr:hover td { background:rgba(255,255,255,.015); }
             <button class="option-btn" id="opt-fluxo-neg" onclick="setOpt('fluxo','neg')">📉 Negativo (prejuízo)</button>
           </div>
         </div>
-
-        <!-- Se negativo: fundo de reserva -->
         <div class="cond" id="cond-fluxo-neg">
           <div class="script-block">
             <span class="script-label">🎙 SE FLUXO NEGATIVO — FALE ISSO</span>
-            <div class="script-text">
-              Isso é preocupante. <strong>Quanto você tem no seu fundo de reserva?</strong>
-              <br><br>
-              <em>(Se não tiver fundo de reserva:) Você tem consciência de que você está a 1 a 2 meses ruins da falência, certo?</em>
-            </div>
+            <div class="script-text">Isso é preocupante. <strong>Quanto você tem no seu fundo de reserva?</strong><br><br><em>(Se não tiver fundo de reserva:) Você tem consciência de que você está a 1 a 2 meses ruins da falência, certo?</em></div>
           </div>
-
           <div class="field-group">
             <label class="field-label">✍️ Tem fundo de reserva?</label>
             <div class="option-grid">
@@ -478,7 +443,6 @@ tr:hover td { background:rgba(255,255,255,.015); }
               <button class="option-btn" id="opt-fundo-nao" onclick="setOpt('fundo','nao')">🚨 Não tem reserva</button>
             </div>
           </div>
-
           <div class="cond" id="cond-fundo-nao">
             <div class="alert-inline red">
               🚨 <div><strong>ENCERRAR ENTREVISTA.</strong> Esse candidato não tem perfil para o programa neste momento. Avance para ver o script de encerramento.</div>
@@ -486,7 +450,6 @@ tr:hover td { background:rgba(255,255,255,.015); }
           </div>
         </div>
       </div>
-
       <div class="step-nav">
         <button class="btn btn-secondary" onclick="prevStep(7)">← Voltar</button>
         <button class="btn btn-primary" onclick="nextStep(7)">Próximo →</button>
@@ -495,26 +458,20 @@ tr:hover td { background:rgba(255,255,255,.015); }
 
     <!-- Step 8: Desafio -->
     <div class="step" id="step-8" style="display:none">
-      <div class="step-badge">Passo 1.4 — Qualificação</div>
+      <div class="step-badge">Passo 1.4 — BANT · Need</div>
       <div class="step-title">Maior Desafio</div>
-      <div class="step-duration">⏱ Pergunta mais importante da qualificação</div>
-
+      <div class="step-duration">⏱ N de BANT — Necessidade real</div>
       <div class="script-block">
         <span class="script-label">🎙 FALE ISSO</span>
-        <div class="script-text">
-          Hoje, qual você considera que é o seu <strong>maior desafio</strong> em vendas e crescimento de alunos que está impedindo sua empresa de avançar?
-        </div>
+        <div class="script-text">Hoje, qual você considera que é o seu <strong>maior desafio</strong> em vendas e crescimento de alunos que está impedindo sua empresa de avançar?</div>
       </div>
-
       <div class="info-block">
-        💡 Essa pergunta é crucial — entenda se o desafio que o candidato tem é de fato o que o programa consegue resolver. Estreite o foco para não sair do escopo.
+        💡 <strong>Need (N do BANT):</strong> A necessidade é o coração da qualificação. O desafio do lead precisa ser algo que o programa resolve. Se o problema for financeiro (dívidas), operacional-básico (aluguel em atraso) ou completamente fora do escopo do PAV/Acelerador, esse lead não tem fit de necessidade agora.
       </div>
-
       <div class="field-group">
         <label class="field-label">✍️ ANOTE — Maior desafio relatado</label>
         <textarea class="field-input field-textarea" id="f-desafio" placeholder="Ex: Muita evasão, pouca captação de novos alunos, não sabe precificar, equipe sem processo de vendas..."></textarea>
       </div>
-
       <div class="step-nav">
         <button class="btn btn-secondary" onclick="prevStep(8)">← Voltar</button>
         <button class="btn btn-primary" onclick="nextStep(8)">Próximo →</button>
@@ -526,18 +483,11 @@ tr:hover td { background:rgba(255,255,255,.015); }
       <div class="step-badge">Passo 1.4 — Qualificação</div>
       <div class="step-title">Ancoragem do Resultado</div>
       <div class="step-duration">⏱ Gera o número que será usado na venda</div>
-
       <div class="script-block">
         <span class="script-label">🎙 FALE ISSO</span>
-        <div class="script-text">
-          Se você eliminasse esse desafio, a quanto você acha que conseguiria <strong>aumentar de margem</strong> e para qual <strong>faturamento</strong>?
-        </div>
+        <div class="script-text">Se você eliminasse esse desafio, a quanto você acha que conseguiria <strong>aumentar de margem</strong> e para qual <strong>faturamento</strong>?</div>
       </div>
-
-      <div class="info-block">
-        💡 Esse número define a meta e você poderá usar para ancorar o quão barata sairá a mentoria frente ao ganho. Ex: "Você me disse que sairia de R$50k para R$80k. Isso representa R$30k a mais por mês. O investimento é apenas 5% disso."
-      </div>
-
+      <div class="info-block">💡 Esse número define a meta e você poderá usar para ancorar o quão barata sairá a mentoria frente ao ganho. Ex: "Você me disse que sairia de R$50k para R$80k. Isso representa R$30k a mais por mês. O investimento é apenas 5% disso."</div>
       <div class="field-row">
         <div class="field-group">
           <label class="field-label">✍️ Faturamento esperado (R$)</label>
@@ -563,7 +513,6 @@ tr:hover td { background:rgba(255,255,255,.015); }
           </select>
         </div>
       </div>
-
       <div class="step-nav">
         <button class="btn btn-secondary" onclick="prevStep(9)">← Voltar</button>
         <button class="btn btn-primary" onclick="nextStep(9)">Próximo →</button>
@@ -575,23 +524,15 @@ tr:hover td { background:rgba(255,255,255,.015); }
       <div class="step-badge">Passo 1.4 — Qualificação</div>
       <div class="step-title">Dor Oculta</div>
       <div class="step-duration">⏱ O verdadeiro "porquê"</div>
-
       <div class="script-block">
         <span class="script-label">🎙 FALE ISSO</span>
-        <div class="script-text">
-          Me explica porque realmente que você quer sair da sua situação atual e quer <strong>crescer a sua empresa</strong>?
-        </div>
+        <div class="script-text">Me explica porque realmente que você quer sair da sua situação atual e quer <strong>crescer a sua empresa</strong>?</div>
       </div>
-
-      <div class="info-block">
-        💡 O objetivo é descobrir o <strong>verdadeiro motivo</strong> pelo qual o candidato quer aumentar o resultado. Pode ser mostrar ao pai que deu certo, arcar com a faculdade da filha, independência financeira, deixar um legado. Se você descobrir essa dor oculta, a venda ficará bem mais fácil.
-      </div>
-
+      <div class="info-block">💡 O objetivo é descobrir o <strong>verdadeiro motivo</strong> pelo qual o candidato quer aumentar o resultado. Pode ser mostrar ao pai que deu certo, arcar com a faculdade da filha, independência financeira, deixar um legado. Se você descobrir essa dor oculta, a venda ficará bem mais fácil.</div>
       <div class="field-group">
         <label class="field-label">✍️ ANOTE — Dor oculta / motivo real</label>
         <textarea class="field-input field-textarea" id="f-dor" placeholder="Ex: Quer provar para a família que conseguiu, quer viajar mais com os filhos, está acumulado de dívidas herdadas do pai..."></textarea>
       </div>
-
       <div class="step-nav">
         <button class="btn btn-secondary" onclick="prevStep(10)">← Voltar</button>
         <button class="btn btn-primary" onclick="nextStep(10)">Próximo →</button>
@@ -600,21 +541,16 @@ tr:hover td { background:rgba(255,255,255,.015); }
 
     <!-- Step 11: Decisores -->
     <div class="step" id="step-11" style="display:none">
-      <div class="step-badge">Passo 1.6</div>
+      <div class="step-badge">Passo 1.6 — BANT · Authority</div>
       <div class="step-title">Identificar Decisores</div>
-      <div class="step-duration">⏱ ~2 minutos — Antes de agendar</div>
-
+      <div class="step-duration">⏱ A de BANT — Autoridade de decisão</div>
       <div class="script-block">
         <span class="script-label">🎙 FALE ISSO</span>
-        <div class="script-text">
-          Deixa eu te perguntar: caso no final dessa <strong>1 hora de consultoria gratuita</strong> nós apresentássemos uma solução — e não quer dizer que vamos, pois não é o foco inicial — você é a pessoa que pode <strong>tomar a decisão</strong> de entrar ou não no programa, ou você precisa consultar alguém para tomar essa decisão? Um sócio, esposa, o financeiro ou alguma outra pessoa...
-        </div>
+        <div class="script-text">Deixa eu te perguntar: caso no final dessa <strong>1 hora de consultoria gratuita</strong> nós apresentássemos uma solução — e não quer dizer que vamos, pois não é o foco inicial — você é a pessoa que pode <strong>tomar a decisão</strong> de entrar ou não no programa, ou você precisa consultar alguém para tomar essa decisão? Um sócio, esposa, o financeiro ou alguma outra pessoa...</div>
       </div>
-
       <div class="info-block">
-        💡 Nosso time só realiza <strong>uma única reunião</strong>. É fundamental que todos os decisores estejam presentes.
+        💡 <strong>Authority (A do BANT):</strong> Nosso time só realiza <strong>uma única reunião</strong>. É fundamental que TODOS os decisores estejam presentes. Se vier sozinho e precisar "consultar o sócio depois", a reunião será perdida. Não agende sem confirmar isso.
       </div>
-
       <div class="field-group">
         <label class="field-label">✍️ Situação do decisor</label>
         <div class="option-grid">
@@ -622,16 +558,10 @@ tr:hover td { background:rgba(255,255,255,.015); }
           <button class="option-btn" id="opt-dec-outro" onclick="setOpt('dec','outro')">👥 Precisa consultar alguém</button>
         </div>
       </div>
-
-      <!-- Se único decisor: checar cônjuge -->
       <div class="cond" id="cond-dec-unico">
         <div class="script-block">
           <span class="script-label">🎙 SE ÚNICO DECISOR — FALE ISSO</span>
-          <div class="script-text">
-            Você é casado? Será que não seria importante sua <strong>esposa participar</strong>? Principalmente para ela entender as estratégias que irão ser utilizadas e caso te apresentarmos uma solução também estar ciente.<br><br>
-            É muito importante que sua cônjuge participe para que ao final da reunião vocês possam tomar uma decisão muito consciente.<br><br>
-            O que geralmente acontece é que você pode gostar muito, mas não consegue explicar com o mesmo nível de detalhe para a sua esposa. E aí ela acaba não concordando. O melhor é ela estar na reunião para entender de maneira clara.
-          </div>
+          <div class="script-text">Você é casado? Será que não seria importante sua <strong>esposa participar</strong>? Principalmente para ela entender as estratégias que irão ser utilizadas e caso te apresentarmos uma solução também estar ciente.<br><br>É muito importante que sua cônjuge participe para que ao final da reunião vocês possam tomar uma decisão muito consciente.<br><br>O que geralmente acontece é que você pode gostar muito, mas não consegue explicar com o mesmo nível de detalhe para a sua esposa. E aí ela acaba não concordando. O melhor é ela estar na reunião para entender de maneira clara.</div>
         </div>
         <div class="field-group">
           <label class="field-label">✍️ É casado?</label>
@@ -640,112 +570,106 @@ tr:hover td { background:rgba(255,255,255,.015); }
             <button class="option-btn" id="opt-cas-nao" onclick="setOpt('cas','nao')">🙋 Não / Solteiro</button>
           </div>
         </div>
-      </div>
-
-      <!-- Se precisa consultar -->
-      <div class="cond" id="cond-dec-outro">
-        <div class="script-block">
-          <span class="script-label">🎙 SE PRECISA CONSULTAR — FALE ISSO</span>
-          <div class="script-text">
-            Então é muito importante que essa pessoa esteja na nossa reunião, tudo bem? Vou mandar alguns horários para vocês ajustarem e já marcamos para todos participarem juntos da reunião.
+        <div class="cond" id="cond-cas-sim">
+          <div class="field-group">
+            <label class="field-label">✍️ Cônjuge confirmado na reunião?</label>
+            <div class="option-grid">
+              <button class="option-btn" id="opt-conjuge-sim" onclick="setOpt('conjuge','sim')">✅ Cônjuge virá junto</button>
+              <button class="option-btn" id="opt-conjuge-nao" onclick="setOpt('conjuge','nao')">⚠️ Cônjuge não virá</button>
+            </div>
+          </div>
+          <div class="cond" id="cond-conjuge-nao">
+            <div class="alert-inline">
+              ⚠️ <div><strong>Risco de decisão bloqueada.</strong> Reforce que é importante trazer o cônjuge. Se não for possível, avise o closer para trabalhar isso no início da reunião.</div>
+            </div>
           </div>
         </div>
       </div>
-
+      <div class="cond" id="cond-dec-outro">
+        <div class="script-block">
+          <span class="script-label">🎙 SE PRECISA CONSULTAR — FALE ISSO</span>
+          <div class="script-text">Então é muito importante que essa pessoa esteja na nossa reunião, tudo bem? Vou mandar alguns horários para vocês ajustarem e já marcamos para todos participarem juntos da reunião.</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">✍️ O outro decisor confirmou presença?</label>
+          <div class="option-grid">
+            <button class="option-btn" id="opt-decisor2-sim" onclick="setOpt('decisor2','sim')">✅ Confirmou que virá</button>
+            <button class="option-btn" id="opt-decisor2-nao" onclick="setOpt('decisor2','nao')">⚠️ Não confirmou / "Vejo depois"</button>
+          </div>
+        </div>
+        <div class="cond" id="cond-decisor2-nao">
+          <div class="alert-inline red">
+            🚨 <div><strong>NÃO AGENDAR sem confirmar o segundo decisor.</strong> Uma reunião sem todos os decisores é uma reunião perdida. Insista ou marque para quando puderem vir juntos.</div>
+          </div>
+        </div>
+      </div>
       <div class="step-nav">
         <button class="btn btn-secondary" onclick="prevStep(11)">← Voltar</button>
         <button class="btn btn-primary" onclick="nextStep(11)">Próximo →</button>
       </div>
     </div>
 
-    <!-- Step 12: Prioridade -->
+    <!-- Step 12: Prioridade (Timeline) -->
     <div class="step" id="step-12" style="display:none">
-      <div class="step-badge">Passo 1.7 — Termômetro</div>
-      <div class="step-title">Qual é a sua Prioridade?</div>
-      <div class="step-duration">⏱ Pergunta decisiva — nunca pule</div>
-
+      <div class="step-badge">Passo 1.7 — BANT · Timeline</div>
+      <div class="step-title">Qual é a sua Urgência?</div>
+      <div class="step-duration">⏱ T de BANT — Prazo de decisão</div>
       <div class="script-block">
         <span class="script-label">🎙 FALE ISSO</span>
-        <div class="script-text">
-          Deixa eu te fazer uma última pergunta antes de fecharmos. <strong>Qual é a sua urgência em resolver esse desafio que você me descreveu?</strong><br><br>
-          Você quer resolver isso <strong>agora com urgência</strong>, está pensando em agir <strong>nos próximos 6 meses</strong>, ou isso é algo para <strong>daqui a 1 ano ou mais</strong>?
-        </div>
+        <div class="script-text">Deixa eu te fazer uma última pergunta antes de fecharmos. <strong>Qual é a sua urgência em resolver esse desafio que você me descreveu?</strong><br><br>Você quer resolver isso <strong>agora com urgência</strong>, está pensando em agir <strong>nos próximos 6 meses</strong>, ou isso é algo para <strong>daqui a 1 ano ou mais</strong>?</div>
       </div>
-
       <div class="info-block warn">
-        ⚠️ Essa pergunta é <strong>obrigatória</strong>. Leads sem prioridade clara têm altíssima chance de no-show ou de dizer "não é o momento" após a reunião. Se a prioridade for baixa, alinhe isso antes de agendar.
+        ⚠️ <strong>Timeline (T do BANT):</strong> Essa pergunta é obrigatória. Leads sem urgência declarada têm altíssima taxa de no-show. Quem responde "1 ano ou mais" raramente fecha. Se a prioridade for baixa, qualifique como Não Agendar ou Cautela máxima.
       </div>
-
       <div class="field-group">
-        <label class="field-label">✍️ Prioridade declarada pelo lead</label>
+        <label class="field-label">✍️ Urgência declarada pelo lead</label>
         <div class="option-grid" style="grid-template-columns:1fr 1fr 1fr">
           <button class="option-btn" id="opt-prior-urgente" onclick="setOpt('prior','urgente')">🔥 Urgente — agora</button>
           <button class="option-btn" id="opt-prior-6meses" onclick="setOpt('prior','6meses')">📅 Próximos 6 meses</button>
           <button class="option-btn" id="opt-prior-1ano" onclick="setOpt('prior','1ano')">🕐 1 ano ou mais</button>
         </div>
       </div>
-
-      <!-- Se 6 meses -->
       <div class="cond" id="cond-prior-6meses">
         <div class="script-block">
           <span class="script-label">🎙 SE 6 MESES — FALE ISSO</span>
-          <div class="script-text">
-            Entendo. Mas deixa eu te perguntar: o que você acha que vai mudar daqui 6 meses que não está acontecendo agora? Porque na maioria das vezes, quem espera 6 meses resolve o problema sozinho ou o problema piora. <strong>O que está te impedindo de agir agora?</strong>
-          </div>
+          <div class="script-text">Entendo. Mas deixa eu te perguntar: o que você acha que vai mudar daqui 6 meses que não está acontecendo agora? Porque na maioria das vezes, quem espera 6 meses resolve o problema sozinho ou o problema piora. <strong>O que está te impedindo de agir agora?</strong></div>
         </div>
-        <div class="info-block">
-          💡 Ouça a resposta com atenção. Se der uma razão concreta (ex: "estou em reforma", "tenho um compromisso financeiro") → pode agendar com cautela. Se a resposta for vaga → baixa prioridade real, anote isso.
-        </div>
+        <div class="info-block">💡 Ouça a resposta com atenção. Se der uma razão concreta (ex: "estou em reforma", "tenho um compromisso financeiro") → pode agendar com cautela. Se a resposta for vaga → baixa prioridade real, anote isso.</div>
       </div>
-
-      <!-- Se 1 ano -->
       <div class="cond" id="cond-prior-1ano">
         <div class="script-block">
           <span class="script-label">🎙 SE 1 ANO OU MAIS — FALE ISSO</span>
-          <div class="script-text">
-            Tudo bem, eu entendo. Mas me diz uma coisa: você me disse que o seu maior desafio é <strong>[repita o desafio que ele descreveu]</strong>. Se você não resolver isso agora, o que acontece com a sua academia daqui 1 ano? <br><br>
-            Normalmente quem fala que é para daqui 1 ano acaba nunca resolvendo — e o problema vai ficando cada vez maior. Você tem certeza que dá para esperar?
-          </div>
+          <div class="script-text">Tudo bem, eu entendo. Mas me diz uma coisa: você me disse que o seu maior desafio é <strong>[repita o desafio que ele descreveu]</strong>. Se você não resolver isso agora, o que acontece com a sua academia daqui 1 ano?<br><br>Normalmente quem fala que é para daqui 1 ano acaba nunca resolvendo — e o problema vai ficando cada vez maior. Você tem certeza que dá para esperar?</div>
         </div>
         <div class="alert-inline red">
-          🚨 <div><strong>ATENÇÃO:</strong> Prioridade de 1 ano ou mais é sinal forte de que o lead não vai fechar. Registre isso no diagnóstico e avise o closer. Não force o agendamento — qualifique como Cautela ou Não Agendar.</div>
+          🚨 <div><strong>ATENÇÃO:</strong> Prioridade de 1 ano ou mais é sinal forte de que o lead não vai fechar. Registre isso no diagnóstico e avise o closer. Não force o agendamento.</div>
         </div>
       </div>
-
-      <!-- Se urgente -->
       <div class="cond" id="cond-prior-urgente">
         <div class="script-block">
           <span class="script-label">🎙 SE URGENTE — FALE ISSO</span>
-          <div class="script-text">
-            Ótimo! Isso é exatamente o perfil que estou buscando — alguém que quer resolver de verdade e não ficar esperando. Vou te passar para a próxima etapa agora.
-          </div>
+          <div class="script-text">Ótimo! Isso é exatamente o perfil que estou buscando — alguém que quer resolver de verdade e não ficar esperando. Vou te passar para a próxima etapa agora.</div>
         </div>
       </div>
-
       <div class="step-nav">
         <button class="btn btn-secondary" onclick="prevStep(12)">← Voltar</button>
         <button class="btn btn-primary" onclick="goToResultado()">Ver Diagnóstico Final →</button>
       </div>
     </div>
 
-  </div><!-- /wizard-steps -->
+  </div>
 
-  <!-- ══ ENCERRAR SCREEN ══ -->
+  <!-- ENCERRAR -->
   <div id="screen-encerrar" style="display:none">
     <div class="encerrar-screen">
       <div class="encerrar-icon">🛑</div>
       <div class="encerrar-title">ENCERRAR ENTREVISTA</div>
       <div class="encerrar-sub">Esse candidato está em situação financeira crítica.<br>Nosso programa não consegue ajudá-lo neste momento.</div>
-
       <div class="encerrar-script">
         <span class="encerrar-label">🎙 FALE EXATAMENTE ISSO</span>
         "Pelo que você me disse, você está em uma situação muito delicada na sua empresa. Na minha opinião, você deveria <strong>segurar o caixa</strong> e não gastar mais nada a não ser o estritamente necessário. Eu vejo que nesse momento não conseguimos te ajudar nessa <strong>1 hora de consultoria 100% gratuita</strong>. Agradeço muito o seu tempo e te enviarei um <strong>PDF de bônus</strong> para te ajudar."
       </div>
-
-      <div class="info-block danger">
-        🚨 Não tente vender. Encerre com respeito e profissionalismo. Deixe a porta aberta para o futuro, mas não siga com o processo.
-      </div>
-
+      <div class="info-block danger">🚨 Não tente vender. Encerre com respeito e profissionalismo. Deixe a porta aberta para o futuro, mas não siga com o processo.</div>
       <div style="display:flex;gap:12px;margin-top:16px;">
         <button class="btn btn-secondary" style="flex:1" onclick="prevStep(7)">← Voltar</button>
         <button class="btn btn-red" style="flex:1" onclick="saveAndNewLead('encerrar')">💾 Salvar & Novo Lead</button>
@@ -753,13 +677,16 @@ tr:hover td { background:rgba(255,255,255,.015); }
     </div>
   </div>
 
-  <!-- ══ RESULTADO SCREEN ══ -->
+  <!-- RESULTADO -->
   <div id="screen-resultado" style="display:none">
     <div class="resultado-layout">
       <div class="resultado-header">
         <div id="rbadge" class="resultado-badge rbadge-ok">✅ Agendar</div>
         <div id="rtitle" class="resultado-title">Agendar Reunião</div>
       </div>
+
+      <!-- BANT Summary -->
+      <div id="r-bant" class="bant-row" style="margin-bottom:20px"></div>
 
       <div class="resultado-grid">
         <div class="r-card">
@@ -785,14 +712,16 @@ tr:hover td { background:rgba(255,255,255,.015); }
         <div id="r-negociacao" class="r-card-value g" style="font-size:14px;font-weight:500;line-height:1.5;margin-top:4px;">—</div>
       </div>
 
-      <div id="r-alerta-block" class="r-card" style="margin-bottom:18px;display:none;border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.07)">
-        <div class="r-card-label" style="color:var(--amber)">🚨 Alertas de Inconsistência / Possível Mentira</div>
-        <div id="r-alerta" class="r-card-value a" style="font-size:13px;font-weight:500;line-height:1.7;margin-top:4px;">—</div>
+      <!-- ALERTAS — só aparece se houver -->
+      <div id="r-alerta-block" class="alertas-block" style="display:none">
+        <h3>🚨 Alertas de Inconsistência</h3>
+        <div id="r-alerta-list"></div>
       </div>
 
-      <div id="r-motivo-block" class="r-card" style="margin-bottom:18px;display:none">
-        <div class="r-card-label">Lógica do Diagnóstico</div>
-        <div id="r-motivo" class="r-card-value a" style="font-size:14px;font-weight:500;line-height:1.5;margin-top:4px;">—</div>
+      <!-- DIAGNÓSTICO EXPLICATIVO -->
+      <div id="r-diagnostico-block" class="diagnostico-block">
+        <h3>🔍 Lógica do Diagnóstico</h3>
+        <div id="r-diagnostico-content"></div>
       </div>
 
       <div id="r-action-block" class="action-block">
@@ -816,10 +745,9 @@ tr:hover td { background:rgba(255,255,255,.015); }
       <button class="btn-novo" onclick="saveAndNewLead('resultado')">+ Qualificar Novo Lead</button>
     </div>
   </div>
+</div>
 
-</div><!-- /view-sdr -->
-
-<!-- ══════════════ GESTOR VIEW ══════════════ -->
+<!-- GESTOR VIEW -->
 <div id="view-gestor" class="view">
   <div class="gestor-layout">
     <div class="gestor-header">
@@ -829,62 +757,35 @@ tr:hover td { background:rgba(255,255,255,.015); }
         <button class="btn-gestor danger" onclick="clearAll()">🗑 Limpar Dados</button>
       </div>
     </div>
-
     <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-label">Total Qualificados</div>
-        <div class="stat-value sv-b" id="g-total">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Agendados</div>
-        <div class="stat-value sv-g" id="g-ok">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Com Cautela</div>
-        <div class="stat-value sv-a" id="g-warn">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Não Aprovados</div>
-        <div class="stat-value sv-r" id="g-no">0</div>
-      </div>
+      <div class="stat-card"><div class="stat-label">Total Qualificados</div><div class="stat-value sv-b" id="g-total">0</div></div>
+      <div class="stat-card"><div class="stat-label">Agendados</div><div class="stat-value sv-g" id="g-ok">0</div></div>
+      <div class="stat-card"><div class="stat-label">Com Cautela</div><div class="stat-value sv-a" id="g-warn">0</div></div>
+      <div class="stat-card"><div class="stat-label">Não Aprovados</div><div class="stat-value sv-r" id="g-no">0</div></div>
     </div>
-
     <div class="table-wrap">
       <div class="table-toolbar">
         <h4>Leads Qualificados</h4>
         <input class="search-input" type="text" placeholder="🔍 Buscar por nome ou empresa..." oninput="renderGestorTable(this.value)">
       </div>
-
       <div id="gestor-table-container">
-        <div class="empty-state">
-          <div class="es-icon">📋</div>
-          <p>Nenhum lead qualificado ainda.<br>Comece usando o painel do SDR.</p>
-        </div>
+        <div class="empty-state"><div class="es-icon">📋</div><p>Nenhum lead qualificado ainda.<br>Comece usando o painel do SDR.</p></div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-// ══ STATE ══
 let currentStep = 0;
-const TOTAL_STEPS = 13; // 0..12
-
-const state = {
-  opts: {},
-  fields: {}
-};
+const TOTAL_STEPS = 13;
+const state = { opts: {}, fields: {} };
 
 function getLeads() {
   try { return JSON.parse(localStorage.getItem('gfb_leads') || '[]'); }
   catch(e) { return []; }
 }
+function saveLeads(arr) { localStorage.setItem('gfb_leads', JSON.stringify(arr)); }
 
-function saveLeads(arr) {
-  localStorage.setItem('gfb_leads', JSON.stringify(arr));
-}
-
-// ══ NAVIGATION ══
 function switchView(v) {
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
@@ -910,25 +811,17 @@ function updateProgress(n) {
 }
 
 function nextStep(from) {
-  // Validation for step 0
   if (from === 0) {
     const nome = document.getElementById('lead-nome').value.trim();
     const emp = document.getElementById('lead-empresa').value.trim();
     if (!nome || !emp) { alert('Preencha o nome e empresa do lead antes de continuar.'); return; }
     document.getElementById('lead-nome-s1').textContent = nome;
   }
-
-  // Check encerrar condition at step 7
   if (from === 7) {
-    const divida = state.opts.divida;
-    const fluxo = state.opts.fluxo;
-    const fundo = state.opts.fundo;
-    if (divida === 'sim' && fluxo === 'neg' && fundo === 'nao') {
-      showEncerrar();
-      return;
+    if (state.opts.divida === 'sim' && state.opts.fluxo === 'neg' && state.opts.fundo === 'nao') {
+      showEncerrar(); return;
     }
   }
-
   const next = from + 1;
   if (next > 12) { goToResultado(); return; }
   currentStep = next;
@@ -944,26 +837,14 @@ function prevStep(from) {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ══ OPTIONS ══
 function setOpt(key, val) {
   state.opts[key] = val;
-
-  // Update button styles
   document.querySelectorAll(`[id^="opt-${key}-"]`).forEach(btn => {
     btn.classList.remove('sel','sel-danger','sel-warn');
   });
   const btn = document.getElementById(`opt-${key}-${val}`);
   if (btn) {
-    if (val === 'nao' && (key === 'fundo' || key === 'divida') || val === 'neg') {
-      btn.classList.add('sel-warn');
-    } else if (val === 'nao' && key === 'fundo') {
-      btn.classList.add('sel-danger');
-    } else {
-      btn.classList.add('sel');
-    }
-    // Re-check color
-    btn.classList.remove('sel','sel-danger','sel-warn');
-    if ((key === 'fundo' && val === 'nao') || (key === 'fluxo' && val === 'neg')) {
+    if ((key === 'fundo' && val === 'nao') || (key === 'fluxo' && val === 'neg') || (key === 'decisor2' && val === 'nao') || (key === 'conjuge' && val === 'nao')) {
       btn.classList.add('sel-danger');
     } else if (val === 'nao' || val === 'neg') {
       btn.classList.add('sel-warn');
@@ -971,32 +852,76 @@ function setOpt(key, val) {
       btn.classList.add('sel');
     }
   }
-
-  // Show/hide conditionals
   const maps = {
     conhece: { sim:'cond-conhece-sim', nao:'cond-conhece-nao' },
     divida: { sim:'cond-divida-sim', nao:null },
     fluxo: { neg:'cond-fluxo-neg', pos:null },
     fundo: { nao:'cond-fundo-nao', sim:null },
     dec: { unico:'cond-dec-unico', outro:'cond-dec-outro' },
+    cas: { sim:'cond-cas-sim', nao:null },
+    conjuge: { nao:'cond-conjuge-nao', sim:null },
+    decisor2: { nao:'cond-decisor2-nao', sim:null },
     prior: { urgente:'cond-prior-urgente', '6meses':'cond-prior-6meses', '1ano':'cond-prior-1ano' }
   };
   if (maps[key]) {
-    Object.entries(maps[key]).forEach(([v, cid]) => {
-      if (!cid) return;
-      const cel = document.getElementById(cid);
-      if (cel) cel.classList.toggle('show', v === val);
+    Object.values(maps[key]).forEach(cid => {
+      if (cid) { const c = document.getElementById(cid); if(c) c.classList.remove('show'); }
     });
-    // Hide "the other" conditional for binary toggles
-    Object.entries(maps[key]).forEach(([v, cid]) => {
-      if (!cid || v === val) return;
-      const cel = document.getElementById(cid);
-      if (cel) cel.classList.remove('show');
-    });
+    const showId = maps[key][val];
+    if (showId) { const c = document.getElementById(showId); if(c) c.classList.add('show'); }
+  }
+  if (key === 'f-faturamento' || key === 'f-margem') updateCapBar();
+}
+
+function updateCapBar() {
+  const fat = parseInt(document.getElementById('f-faturamento').value) || 0;
+  const margem = parseInt(document.getElementById('f-margem').value) || 0;
+
+  if (fat > 0) {
+    const fb = document.getElementById('fat-feedback');
+    const fbar = document.getElementById('fat-bar');
+    const ftxt = document.getElementById('fat-text');
+    fb.style.display = 'block';
+    let pct = 0, cor = '', txt = '';
+    if (fat <= 10000) { pct=10; cor='#ef4444'; txt='⚠️ Faturamento muito baixo. Capacidade de pagamento crítica — dificilmente conseguirá arcar com o investimento do programa.'; }
+    else if (fat <= 20000) { pct=25; cor='#ef4444'; txt='⚠️ Faturamento baixo. Apenas possível se margem for muito alta (acima de 30%). Perfil de risco elevado.'; }
+    else if (fat <= 30000) { pct=40; cor='#f59e0b'; txt='🟡 Faturamento na zona de atenção. Viável se margem estiver acima de 15%. Produto provável: Acelerador.'; }
+    else if (fat <= 50000) { pct=60; cor='#f59e0b'; txt='🟡 Faturamento moderado. Viável para PAV se margem for boa. Confirmar situação financeira.'; }
+    else if (fat <= 80000) { pct=75; cor='#16c784'; txt='✅ Faturamento adequado. Boa capacidade para PAV, especialmente se não tiver dívidas.'; }
+    else if (fat <= 120000) { pct=88; cor='#16c784'; txt='✅ Faturamento forte. Excelente capacidade de pagamento para PAV.'; }
+    else { pct=100; cor='#16c784'; txt='✅ Faturamento excelente. Capacidade de pagamento ampla.'; }
+    fbar.style.width = pct+'%'; fbar.style.background = cor;
+    ftxt.innerHTML = txt; ftxt.style.color = cor;
+  }
+
+  if (fat > 0 && margem > 0) {
+    const origem = document.getElementById('lead-origem').value || '';
+    const isPAV = fat > 30000 && !origem.includes('Até 40K');
+    const ticketProduto = isPAV ? 24997 : 1997;
+    const lucroMensal = fat * (margem / 100);
+    const meses = lucroMensal > 0 ? ticketProduto / lucroMensal : 99;
+
+    const cb = document.getElementById('cap-feedback');
+    const cbar = document.getElementById('cap-bar');
+    const ctxt = document.getElementById('cap-text');
+    cb.style.display = 'block';
+
+    let pct = 0, cor = '', txt = '';
+    const lucroFmt = 'R$' + lucroMensal.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const mesesFmt = meses.toFixed(1);
+
+    if (meses <= 0.5) { pct=100; cor='#16c784'; txt=`✅ Lucro mensal estimado: ${lucroFmt}. O programa representa menos de meio mês de lucro — excelente capacidade de pagamento. Tentar fechar à vista.`; }
+    else if (meses <= 1) { pct=85; cor='#16c784'; txt=`✅ Lucro mensal estimado: ${lucroFmt}. O programa equivale a ${mesesFmt} mês de lucro — boa capacidade. Pode tentar à vista ou poucas parcelas.`; }
+    else if (meses <= 2) { pct=65; cor='#f59e0b'; txt=`🟡 Lucro mensal estimado: ${lucroFmt}. O programa equivale a ${mesesFmt} meses de lucro — capacidade moderada. Parcelamento recomendado.`; }
+    else if (meses <= 3) { pct=45; cor='#f59e0b'; txt=`🟡 Lucro mensal estimado: ${lucroFmt}. O programa equivale a ${mesesFmt} meses de lucro — capacidade apertada. Confirmar ausência de dívidas.`; }
+    else if (meses <= 6) { pct=25; cor='#ef4444'; txt=`⚠️ Lucro mensal estimado: ${lucroFmt}. O programa equivale a ${mesesFmt} meses de lucro — capacidade muito baixa. Closer deve validar limite de cartão.`; }
+    else { pct=10; cor='#ef4444'; txt=`🚨 Lucro mensal estimado: ${lucroFmt}. O programa equivale a ${mesesFmt} meses de lucro — praticamente inviável financeiramente. Não agendar sem comprovação.`; }
+
+    cbar.style.width = pct+'%'; cbar.style.background = cor;
+    ctxt.innerHTML = txt; ctxt.style.color = cor;
   }
 }
 
-// ══ ENCERRAR ══
 function showEncerrar() {
   document.getElementById('wizard-steps').style.display = 'none';
   document.getElementById('screen-encerrar').style.display = 'block';
@@ -1004,45 +929,46 @@ function showEncerrar() {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ══ RESULTADO LOGIC ══
+// ═══════════════════════════════════════════
+// COMPUTE RESULTADO
+// ═══════════════════════════════════════════
 function computeResultado() {
-  const fat    = parseInt(document.getElementById('f-faturamento').value)  || 0;
-  const margem = parseInt(document.getElementById('f-margem').value)       || 0;
+  const fat    = parseInt(document.getElementById('f-faturamento').value) || 0;
+  const margem = parseInt(document.getElementById('f-margem').value) || 0;
   const fatEsp = parseInt(document.getElementById('f-fat-esperado').value) || 0;
-  const divida = state.opts.divida;
-  const fluxo  = state.opts.fluxo;
-  const fundo  = state.opts.fundo;
-  const dec    = state.opts.dec;
-  const cas    = state.opts.cas;
-  const prior  = state.opts.prior || '';
-  const dor      = (document.getElementById('f-dor').value      || '').trim();
-  const desafio  = (document.getElementById('f-desafio').value  || '').trim();
-  const negocio  = (document.getElementById('f-negocio').value  || '').trim();
-  const origem   = document.getElementById('lead-origem').value || '';
+  const divida = state.opts.divida || '';
+  const fluxo  = state.opts.fluxo  || '';
+  const fundo  = state.opts.fundo  || '';
+  const dec    = state.opts.dec    || '';
+  const cas    = state.opts.cas    || '';
+  const conjuge   = state.opts.conjuge   || '';
+  const decisor2  = state.opts.decisor2  || '';
+  const prior  = state.opts.prior  || '';
+  const dor     = (document.getElementById('f-dor').value     || '').trim();
+  const desafio = (document.getElementById('f-desafio').value || '').trim();
+  const negocio = (document.getElementById('f-negocio').value || '').trim();
+  const origem  = document.getElementById('lead-origem').value || '';
 
   const origemQuente      = origem.includes('Quente');
   const origemFrioAte40k  = origem.includes('Até 40K') || origem.includes('até 40');
   const origemFrioMais40k = origem.includes('+40K') || origem.includes('+40k');
 
-  // ─────────────────────────────────────────────────────────────
-  // BLOCO 1 — PRODUTO RECOMENDADO
-  // ─────────────────────────────────────────────────────────────
+  // ── PRODUTO ──
   let produto = '', produtoLogica = '';
-
   if (fat <= 30000) {
     produto = 'Acelerador de Matrículas — R$1.997';
-    produtoLogica = 'Faturamento até R$30k → perfil pequena academia/studio sem time. Produto: Acelerador.';
+    produtoLogica = 'faturamento até R$30k';
   } else if (fat === 50000) {
     if (origemFrioAte40k) {
       produto = 'Acelerador de Matrículas — R$1.997';
-      produtoLogica = 'Funil Frio Até 40K + faixa R$30-50k → provável perfil Acelerador.';
+      produtoLogica = 'Funil Frio Até 40K + faixa R$30-50k';
     } else {
       produto = 'PAV — Programa de Aceleração de Vendas — R$24.997';
-      produtoLogica = 'Faixa R$30-50k com origem +40K ou Quente → zona de transição, avaliar PAV.';
+      produtoLogica = 'faixa R$30-50k com origem +40K ou Quente';
     }
   } else {
     produto = 'PAV — Programa de Aceleração de Vendas — R$24.997';
-    produtoLogica = 'Faturamento acima de R$50k → estrutura compatível com PAV.';
+    produtoLogica = 'faturamento acima de R$50k';
   }
 
   const isPAV        = produto.includes('PAV');
@@ -1051,218 +977,214 @@ function computeResultado() {
   const lucroEstimado  = fat * (margem / 100);
   const mesesParaPagar = lucroEstimado > 0 ? ticketProduto / lucroEstimado : 99;
 
-  // ─────────────────────────────────────────────────────────────
-  // BLOCO 2 — DETECÇÃO DE MENTIRAS E INCONSISTÊNCIAS (10 padrões)
-  // Cada alerta tem: texto, severidade (critico | suspeito)
-  // ─────────────────────────────────────────────────────────────
-  let alertasMentira = []; // { msg, sev }
+  // ── BANT ASSESSMENT ──
+  // B — Budget
+  let bantB = 'ok', bantBDesc = '';
+  if (mesesParaPagar > 6 || (divida === 'sim' && fluxo === 'neg' && fundo === 'nao')) {
+    bantB = 'no'; bantBDesc = 'Capacidade financeira insuficiente';
+  } else if (mesesParaPagar > 3 || (divida === 'sim' && fluxo === 'neg')) {
+    bantB = 'warn'; bantBDesc = 'Capacidade apertada';
+  } else {
+    bantBDesc = 'Capacidade adequada';
+  }
 
-  // 1. MARGEM IRREAL para o faturamento declarado
+  // A — Authority
+  let bantA = 'ok', bantADesc = '';
+  if (dec === 'outro' && decisor2 === 'nao') {
+    bantA = 'no'; bantADesc = '2º decisor não confirmado';
+  } else if (dec === 'outro') {
+    bantA = 'warn'; bantADesc = 'Múltiplos decisores';
+  } else if (dec === 'unico' && cas === 'sim' && conjuge === 'nao') {
+    bantA = 'warn'; bantADesc = 'Cônjuge não vem';
+  } else if (dec === 'unico') {
+    bantADesc = 'Decisor único confirmado';
+  } else {
+    bantA = 'warn'; bantADesc = 'Não informado';
+  }
+
+  // N — Need
+  let bantN = 'ok', bantNDesc = '';
+  if (!desafio || desafio.length < 10) {
+    bantN = 'warn'; bantNDesc = 'Necessidade não mapeada';
+  } else {
+    bantNDesc = desafio.substring(0,40)+'...';
+  }
+
+  // T — Timeline
+  let bantT = 'ok', bantTDesc = '';
+  if (prior === '1ano') { bantT = 'no'; bantTDesc = 'Baixíssima urgência'; }
+  else if (prior === '6meses') { bantT = 'warn'; bantTDesc = 'Urgência moderada'; }
+  else if (prior === 'urgente') { bantTDesc = 'Alta urgência'; }
+  else { bantT = 'warn'; bantTDesc = 'Não informada'; }
+
+  const bant = { B: {status:bantB, desc:bantBDesc}, A: {status:bantA, desc:bantADesc}, N: {status:bantN, desc:bantNDesc}, T: {status:bantT, desc:bantTDesc} };
+
+  // ── ALERTAS DE INCONSISTÊNCIA ──
+  let alertas = [];
+
   if (fat <= 20000 && margem >= 35)
-    alertasMentira.push({ sev:'critico', msg:'🔴 Margem acima de 30% com faturamento abaixo de R$20k é praticamente impossível no setor fitness — custos fixos (aluguel, energia, folha) inviabilizam essa equação. Confirme se não está confundindo margem com outro indicador.' });
+    alertas.push({ sev:'critico', msg:'Margem acima de 30% com faturamento abaixo de R$20k é praticamente impossível no setor fitness — custos fixos (aluguel, energia, folha) inviabilizam essa equação. Confirme se não está confundindo margem de contribuição com lucro líquido.' });
+
   if (margem >= 50 && fat < 80000)
-    alertasMentira.push({ sev:'critico', msg:'🔴 Margem acima de 40% com faturamento abaixo de R$80k raramente ocorre em academias. Questione os custos fixos declarados. Exemplo real: R$60k de faturamento com R$45k de lucro líquido é inviável no mundo real do fitness.' });
+    alertas.push({ sev:'critico', msg:'Margem acima de 40% com faturamento abaixo de R$80k raramente ocorre em academias convencionais. Questione os custos fixos declarados. Muito provavelmente está informando a margem bruta, não o lucro líquido.' });
 
-  // 2. FATURAMENTO INFLADO (confunde bruto com líquido ou inclui receita de terceiros)
   if (fat >= 50000 && margem <= 5)
-    alertasMentira.push({ sev:'critico', msg:'🔴 Faturamento alto com margem abaixo de 5%: possível que esteja declarando faturamento bruto mas esquecendo inadimplência, personal trainers autônomos ou taxas. O caixa real pode ser muito menor.' });
+    alertas.push({ sev:'critico', msg:'Faturamento alto com margem abaixo de 5%: possível que esteja declarando faturamento bruto incluindo inadimplência ou receitas de parceiros. O caixa real pode ser muito menor. Solicite o extrato bancário antes da reunião.' });
 
-  // 3. "NÃO TENHO DÍVIDA" mas os números não fecham
   if (fat <= 15000 && divida === 'nao' && margem >= 20)
-    alertasMentira.push({ sev:'critico', msg:'🔴 Faturamento até R$15k + sem dívidas + margem boa: verifique se o lead está confundindo faturamento com lucro. Uma academia com esse faturamento raramente consegue pagar aluguel, energia e equipe e ainda ter margem alta.' });
+    alertas.push({ sev:'critico', msg:'Faturamento até R$15k + sem dívidas + margem boa: muito provavelmente está confundindo faturamento com lucro. Uma academia nessa faixa raramente cobre aluguel, energia e folha e ainda tem margem alta.' });
 
-  // 4. FUNDO DE RESERVA IMPROVÁVEL
   if (divida === 'sim' && fluxo === 'neg' && fundo === 'sim' && fat < 30000)
-    alertasMentira.push({ sev:'critico', msg:'🔴 Fluxo de caixa negativo + faturamento baixo + reserva declarada: quem tem fluxo negativo consistente consome a reserva rapidamente. Cheque se a reserva é real ou se foi informada apenas para "passar" na triagem.' });
+    alertas.push({ sev:'critico', msg:'Fluxo negativo + faturamento baixo + reserva declarada: quem tem fluxo negativo consistente consome a reserva rapidamente. Verifique se a reserva é real ou se foi informada para "passar na triagem".' });
 
-  // 5. NÚMERO DE ALUNOS × FATURAMENTO INCOMPATÍVEL
-  // Inferimos pelo negócio descrito: se mencionou alunos no texto
   const alunosMatch = negocio.match(/(\d+)\s*(alunos?|clientes?|matrículas?)/i);
   if (alunosMatch) {
     const alunos = parseInt(alunosMatch[1]);
     if (alunos > 0 && fat > 0) {
       const ticketMedio = fat / alunos;
       if (ticketMedio < 30 && alunos > 50)
-        alertasMentira.push({ sev:'critico', msg:`🔴 Ticket médio calculado: R$${ticketMedio.toFixed(0)}/aluno (${alunos} alunos × R$${fat.toLocaleString('pt-BR')}). Abaixo de R$30/aluno para academia com estrutura é inviável — confirme esses números.` });
-      if (ticketMedio > 600 && !negocio.toLowerCase().includes('premium') && !negocio.toLowerCase().includes('vip') && !negocio.toLowerCase().includes('personal'))
-        alertasMentira.push({ sev:'suspeito', msg:`🟡 Ticket médio calculado: R$${ticketMedio.toFixed(0)}/aluno — muito acima da média para academia convencional. Confirme se é realmente um studio premium ou se o número de alunos está errado.` });
+        alertas.push({ sev:'critico', msg:'Ticket médio calculado: R$'+ticketMedio.toFixed(0)+'/aluno ('+alunos+' alunos × R$'+fat.toLocaleString('pt-BR')+'). Abaixo de R$30/aluno para academia com estrutura é inviável — os números declarados não fecham.' });
+      if (ticketMedio > 600 && !negocio.toLowerCase().includes('premium') && !negocio.toLowerCase().includes('vip'))
+        alertas.push({ sev:'suspeito', msg:'Ticket médio calculado: R$'+ticketMedio.toFixed(0)+'/aluno — muito acima da média para academia convencional. Confirme se é realmente um studio premium ou se o número de alunos está subestimado.' });
     }
   }
 
-  // 6. DECISOR ÚNICO MAS MENCIONA SÓCIO/CÔNJUGE NO NEGÓCIO
   if (dec === 'unico' && (negocio.toLowerCase().includes('sócio') || negocio.toLowerCase().includes('socio') || negocio.toLowerCase().includes('sociedade')))
-    alertasMentira.push({ sev:'suspeito', msg:'🟡 Lead declarou ser o único decisor mas mencionou sócio na descrição do negócio. Confirme quem mais precisa estar na reunião para a decisão ser tomada.' });
+    alertas.push({ sev:'suspeito', msg:'Lead declarou ser o único decisor mas mencionou sócio na descrição do negócio. Confirme quem mais precisa estar na reunião para evitar que a decisão seja bloqueada depois.' });
 
-  // 7. ESTRUTURA DECLARADA × FATURAMENTO INCOMPATÍVEL
   const temFuncionarios = negocio.match(/(\d+)\s*(funcionário|funcionarios|colaborador|colaboradores|CLT)/i);
   if (temFuncionarios) {
     const funcs = parseInt(temFuncionarios[1]);
-    // Custo médio por funcionário no setor (salário + encargos) ~R$2.500
-    const custoFolhaEstimado = funcs * 2500;
-    if (fat > 0 && custoFolhaEstimado > fat * 0.6)
-      alertasMentira.push({ sev:'critico', msg:`🔴 ${funcs} funcionários declarados: custo estimado de folha ~R$${custoFolhaEstimado.toLocaleString('pt-BR')}/mês, o que representa mais de 60% do faturamento declarado. Matematicamente inviável sem dívidas ou fluxo negativo.` });
+    const custoFolha = funcs * 2500;
+    if (fat > 0 && custoFolha > fat * 0.6)
+      alertas.push({ sev:'critico', msg:funcs+' funcionários declarados: custo de folha estimado ~R$'+custoFolha.toLocaleString('pt-BR')+'/mês, mais de 60% do faturamento. Matematicamente inviável sem endividamento ou fluxo negativo.' });
   }
 
-  // 8. DUAS UNIDADES COM FATURAMENTO MUITO BAIXO
   if ((negocio.toLowerCase().includes('unidade') || negocio.toLowerCase().includes('filial')) && fat < 30000)
-    alertasMentira.push({ sev:'critico', msg:'🔴 Mencionou mais de uma unidade mas faturamento total abaixo de R$30k: duas unidades com custos fixos separados e esse faturamento sugere que está operando no prejuízo ou o faturamento declarado está incorreto.' });
+    alertas.push({ sev:'critico', msg:'Mencionou mais de uma unidade mas faturamento total abaixo de R$30k: duas unidades com custos fixos separados nessa faixa sugerem operação no prejuízo ou faturamento incorreto.' });
 
-  // 9. TEMPO DE MERCADO × FATURAMENTO ESTAGNADO
-  const tempoMatch = negocio.match(/(\d+)\s*(anos?|meses?)\s*(de\s*)?(academia|mercado|operação|atividade)/i);
-  if (tempoMatch) {
-    const tempo = parseInt(tempoMatch[1]);
-    const unidade = tempoMatch[2].toLowerCase();
-    const anosOperando = unidade.includes('mes') ? tempo / 12 : tempo;
-    if (anosOperando >= 5 && fat < 20000)
-      alertasMentira.push({ sev:'suspeito', msg:`🟡 Academia com ${anosOperando >= 1 ? Math.round(anosOperando)+'+ anos' : tempo+' meses'} de operação e faturamento abaixo de R$20k: ou o negócio está em queda severa ou o faturamento está subinformado. Aprofunde essa questão.` });
-  }
-
-  // 10. "TEM TIME DE VENDAS" para acessar PAV mas descrição indica que é sozinho
   if (isPAV && (negocio.toLowerCase().includes('sozinho') || negocio.toLowerCase().includes('só eu') || negocio.toLowerCase().includes('eu mesmo') || negocio.toLowerCase().includes('faço tudo')))
-    alertasMentira.push({ sev:'suspeito', msg:'🟡 Perfil indicado para o PAV (que exige time de vendas/recepção), mas a descrição do negócio sugere que o lead faz tudo sozinho. Reavalie se o produto correto não seria o Acelerador de Matrículas.' });
+    alertas.push({ sev:'suspeito', msg:'Perfil indicado para o PAV (que exige time de vendas), mas a descrição sugere que o lead opera sozinho. Reavalie se o produto correto não seria o Acelerador de Matrículas.' });
 
-  // 11. PRIORIDADE BAIXA (não é mentira mas é sinal forte de não-fechamento)
-  if (prior === '1ano')
-    alertasMentira.push({ sev:'critico', msg:'🔴 Lead declarou que a prioridade é de 1 ano ou mais. Altíssimo risco de no-show ou "não é o momento" após a reunião. Não agendar sem antes aprofundar o porquê da baixa urgência.' });
-  if (prior === '6meses')
-    alertasMentira.push({ sev:'suspeito', msg:'🟡 Prioridade declarada: próximos 6 meses. Risco moderado de adiamento. Certifique-se de que o closer saiba disso e trabalhe a urgência logo no início da reunião.' });
-
-  // ─────────────────────────────────────────────────────────────
-  // BLOCO 3 — FORMA DE NEGOCIAÇÃO
-  // ─────────────────────────────────────────────────────────────
+  // ── FORMA DE NEGOCIAÇÃO ──
   let negociacao = '';
-
   if (isAcelerador) {
-    if (fat <= 10000 || (divida === 'sim' && fluxo === 'neg')) {
-      negociacao = '💳 Parcelado em até 12x no cartão (R$166/mês) — não forçar à vista, faturamento muito baixo.';
-    } else if (mesesParaPagar <= 0.5 && divida === 'nao') {
-      negociacao = '💳 Cartão à vista — lucro mensal cobre o ticket com folga. Tentar fechar à vista primeiro.';
-    } else if (mesesParaPagar <= 1 && divida === 'nao') {
-      negociacao = '💳 À vista ou em até 3x no cartão — margem saudável. Evitar parcelar muito.';
-    } else {
-      negociacao = '💳 Entrada de 50% (R$998) + restante em até 6x — perfil intermediário.';
-    }
+    if (fat <= 10000 || (divida === 'sim' && fluxo === 'neg')) negociacao = '💳 Parcelado em até 12x no cartão (R$166/mês) — faturamento muito baixo, não forçar à vista.';
+    else if (mesesParaPagar <= 0.5 && divida === 'nao') negociacao = '💳 Cartão à vista (R$1.997) — lucro mensal cobre o ticket com folga. Tentar fechar à vista primeiro.';
+    else if (mesesParaPagar <= 1 && divida === 'nao') negociacao = '💳 À vista ou em até 3x — margem saudável. Evitar parcelar muito.';
+    else negociacao = '💳 Entrada de 50% (R$998) + restante em até 6x no cartão.';
   } else {
-    if (fat >= 80000 && margem >= 25 && divida === 'nao') {
-      negociacao = '💳 À vista ou em até 6x no cartão — faturamento e margem fortes. Tentar menos parcelas.';
-    } else if (fat >= 50000 && (divida === 'nao' || fluxo === 'pos')) {
-      negociacao = '💳 Entrada de 30-50% no cartão + restante em até 12x — capacidade moderada para PAV.';
-    } else {
-      negociacao = '💳 Parcelado em até 12x no cartão (R$2.083/mês) — verificar limite disponível com o closer antes da reunião.';
-    }
+    if (fat >= 80000 && margem >= 25 && divida === 'nao') negociacao = '💳 À vista ou em até 6x no cartão — faturamento e margem fortes. Tentar menos parcelas.';
+    else if (fat >= 50000 && (divida === 'nao' || fluxo === 'pos')) negociacao = '💳 Entrada de 30-50% no cartão + restante em até 12x — capacidade moderada para PAV.';
+    else negociacao = '💳 Parcelado em até 12x no cartão (R$2.083/mês) — verificar limite disponível com o closer antes da reunião.';
   }
 
-  // ─────────────────────────────────────────────────────────────
-  // BLOCO 4 — FÓRMULA DE CHANCE DE COMPRA (0–95%)
-  // ─────────────────────────────────────────────────────────────
-  let scoreA = 0, scoreB = 0, scoreC = 0, scoreD = 0, scoreE = 0, scoreF = 0, scoreG = 0, scoreH = 0;
+  // ── SCORING ──
+  let scoreA=0, scoreB=0, scoreC=0, scoreD=0, scoreE=0, scoreF=0, scoreG=0, scoreH=0;
 
-  // A) FIT DE PRODUTO (até 20 pts)
+  // A) Fit de Produto (20 pts)
   if (isAcelerador) {
     if (fat <= 30000 && fat >= 10000) scoreA = 20;
-    else if (fat < 10000)             scoreA = 8;
-    else                              scoreA = 12;
+    else if (fat < 10000) scoreA = 8;
+    else scoreA = 12;
   } else {
-    if (fat >= 80000)      scoreA = 20;
+    if (fat >= 80000) scoreA = 20;
     else if (fat >= 50000) scoreA = 15;
-    else                   scoreA = 8;
+    else scoreA = 8;
   }
 
-  // B) CAPACIDADE FINANCEIRA (até 25 pts)
-  let sbFat = 0;
+  // B) Capacidade Financeira — BANT Budget (25 pts)
+  let sbFat = 0, sbMargem = 0, sbFinanceiro = 0;
   if (isAcelerador) {
-    if (fat >= 20000)      sbFat = 10;
-    else if (fat >= 10000) sbFat = 6;
-    else                   sbFat = 2;
+    if (fat >= 20000) sbFat = 10; else if (fat >= 10000) sbFat = 6; else sbFat = 2;
   } else {
-    if (fat >= 80000)      sbFat = 10;
-    else if (fat >= 50000) sbFat = 6;
-    else                   sbFat = 2;
+    if (fat >= 80000) sbFat = 10; else if (fat >= 50000) sbFat = 6; else sbFat = 2;
   }
-  let sbMargem = 0;
-  if (mesesParaPagar <= 0.5)    sbMargem = 8;
-  else if (mesesParaPagar <= 1) sbMargem = 6;
-  else if (mesesParaPagar <= 2) sbMargem = 4;
-  else if (mesesParaPagar <= 3) sbMargem = 2;
-  let sbFinanceiro = 0;
-  if (!divida || divida === 'nao')                                  sbFinanceiro = 7;
-  else if (divida === 'sim' && fluxo === 'pos')                     sbFinanceiro = 4;
-  else if (divida === 'sim' && fluxo === 'neg' && fundo === 'sim')  sbFinanceiro = 2;
+  if (mesesParaPagar <= 0.5) sbMargem = 10;
+  else if (mesesParaPagar <= 1) sbMargem = 8;
+  else if (mesesParaPagar <= 2) sbMargem = 5;
+  else if (mesesParaPagar <= 3) sbMargem = 3;
+  else if (mesesParaPagar <= 6) sbMargem = 1;
+
+  if (!divida || divida === 'nao') sbFinanceiro = 5;
+  else if (divida === 'sim' && fluxo === 'pos') sbFinanceiro = 3;
+  else if (divida === 'sim' && fluxo === 'neg' && fundo === 'sim') sbFinanceiro = 1;
   scoreB = sbFat + sbMargem + sbFinanceiro;
 
-  // C) MOTIVAÇÃO / DOR OCULTA (até 20 pts)
-  if (dor.length > 80)       scoreC = 20;
-  else if (dor.length > 40)  scoreC = 15;
-  else if (dor.length > 15)  scoreC = 8;
-  else if (dor.length > 0)   scoreC = 4;
+  // C) Motivação / Dor Oculta (20 pts)
+  if (dor.length > 80) scoreC = 20;
+  else if (dor.length > 40) scoreC = 15;
+  else if (dor.length > 15) scoreC = 8;
+  else if (dor.length > 0) scoreC = 4;
 
-  // D) CONSCIÊNCIA DO PROBLEMA (até 10 pts)
-  if (desafio.length > 80)       scoreD = 10;
-  else if (desafio.length > 40)  scoreD = 7;
-  else if (desafio.length > 15)  scoreD = 4;
-  else if (desafio.length > 0)   scoreD = 2;
+  // D) Necessidade / Desafio — BANT Need (10 pts)
+  if (desafio.length > 80) scoreD = 10;
+  else if (desafio.length > 40) scoreD = 7;
+  else if (desafio.length > 15) scoreD = 4;
+  else if (desafio.length > 0) scoreD = 2;
 
-  // E) PROCESSO DECISÓRIO (até 10 pts)
-  if (dec === 'unico' && cas === 'nao')  scoreE = 10;
-  else if (dec === 'unico')              scoreE = 7;
-  else if (dec === 'outro')              scoreE = 3;
+  // E) Autoridade — BANT Authority (10 pts)
+  if (dec === 'unico' && cas === 'nao') scoreE = 10;
+  else if (dec === 'unico' && conjuge === 'sim') scoreE = 9;
+  else if (dec === 'unico') scoreE = 7;
+  else if (dec === 'outro' && decisor2 === 'sim') scoreE = 6;
+  else if (dec === 'outro') scoreE = 2;
 
-  // F) INTENÇÃO / ORIGEM (até 10 pts)
-  if (origemQuente)           scoreF = 10;
+  // F) Intenção / Origem (10 pts)
+  if (origemQuente) scoreF = 10;
   else if (origemFrioMais40k) scoreF = 6;
-  else if (origemFrioAte40k)  scoreF = 3;
+  else if (origemFrioAte40k) scoreF = 3;
 
-  // G) PRIORIDADE DECLARADA (até 10 pts) — nova dimensão
-  if (prior === 'urgente')     scoreG = 10;
+  // G) Urgência — BANT Timeline (10 pts)
+  if (prior === 'urgente') scoreG = 10;
   else if (prior === '6meses') scoreG = 4;
-  else if (prior === '1ano')   scoreG = 0;
-  else                         scoreG = 3; // não respondeu
+  else if (prior === '1ano') scoreG = 0;
+  else scoreG = 3;
 
-  // H) PENALIDADES
-  const criticos  = alertasMentira.filter(a => a.sev === 'critico').length;
-  const suspeitos = alertasMentira.filter(a => a.sev === 'suspeito').length;
+  // H) Penalidades
+  const criticos  = alertas.filter(a => a.sev === 'critico').length;
+  const suspeitos = alertas.filter(a => a.sev === 'suspeito').length;
   scoreH -= criticos  * 8;
   scoreH -= suspeitos * 4;
-  if (mesesParaPagar > 6)      scoreH -= 10;
+  if (mesesParaPagar > 6) scoreH -= 10;
   else if (mesesParaPagar > 4) scoreH -= 6;
   else if (mesesParaPagar > 3) scoreH -= 3;
-  if (dor.length === 0)        scoreH -= 5;
+  if (dor.length === 0) scoreH -= 5;
   if (divida === 'sim' && fluxo === 'neg' && fundo === 'nao') scoreH -= 20;
-  if (dec === 'outro')         scoreH -= 4;
-  if (prior === '1ano')        scoreH -= 8;
+  if (dec === 'outro' && decisor2 !== 'sim') scoreH -= 6;
+  else if (dec === 'outro') scoreH -= 2;
+  if (prior === '1ano') scoreH -= 8;
   else if (prior === '6meses') scoreH -= 3;
 
   let score = scoreA + scoreB + scoreC + scoreD + scoreE + scoreF + scoreG + scoreH;
   score = Math.max(0, Math.min(score, 95));
 
   const breakdown = [
-    { label: 'Fit de Produto',          pts: scoreA, max: 20 },
-    { label: 'Capacidade Financeira',   pts: scoreB, max: 25 },
-    { label: 'Motivação / Dor Oculta',  pts: scoreC, max: 20 },
-    { label: 'Consciência do Problema', pts: scoreD, max: 10 },
-    { label: 'Processo Decisório',      pts: scoreE, max: 10 },
-    { label: 'Intenção / Origem',       pts: scoreF, max: 10 },
-    { label: 'Prioridade Declarada',    pts: scoreG, max: 10 },
-    { label: 'Penalidades',             pts: scoreH, max: 0  },
+    { label:'Fit de Produto',                pts:scoreA, max:20 },
+    { label:'Capacidade Financeira [Budget]', pts:scoreB, max:25 },
+    { label:'Motivação / Dor Oculta',        pts:scoreC, max:20 },
+    { label:'Necessidade [Need]',            pts:scoreD, max:10 },
+    { label:'Autoridade Decisória [Authority]', pts:scoreE, max:10 },
+    { label:'Intenção / Origem',             pts:scoreF, max:10 },
+    { label:'Urgência [Timeline]',           pts:scoreG, max:10 },
+    { label:'Penalidades',                   pts:scoreH, max:0  },
   ];
 
-  // ─────────────────────────────────────────────────────────────
-  // BLOCO 5 — DECISÃO FINAL
-  // ─────────────────────────────────────────────────────────────
-  let resultado, badgeClass, tituloText, actions, motivo;
+  const pontosFragos = breakdown.filter(d => d.max > 0 && d.pts < d.max * 0.5).map(d => `${d.label} (${d.pts}/${d.max})`);
 
-  const pontosFragos = breakdown
-    .filter(d => d.max > 0 && d.pts < d.max * 0.5)
-    .map(d => `${d.label} (${d.pts}/${d.max})`);
-  const motivoFraco = pontosFragos.length > 0 ? 'Pontos fracos: ' + pontosFragos.join(', ') + '.' : '';
+  // ── DECISÃO ──
+  let resultado, badgeClass, tituloText, actions;
 
   const priorLabel = prior === 'urgente' ? '🔥 Urgente' : prior === '6meses' ? '📅 6 meses' : prior === '1ano' ? '🕐 1 ano+' : '❓ Não informada';
 
+  const decisorAlerta = dec === 'outro' && decisor2 !== 'sim'
+    ? '🚨 SEGUNDO DECISOR NÃO CONFIRMADO — não agendar sem garantir presença de todos.'
+    : dec === 'unico' && cas === 'sim' && conjuge !== 'sim'
+    ? '⚠️ Cônjuge não confirmado na reunião — closer deve reforçar isso no agendamento.'
+    : null;
+
   if (score >= 60) {
-    resultado  = 'agendar';
-    badgeClass = 'rbadge-ok';
-    tituloText = '✅ Agendar Reunião com o Closer';
-    motivo = motivoFraco;
+    resultado = 'agendar'; badgeClass = 'rbadge-ok'; tituloText = '✅ Agendar Reunião com o Closer';
     actions = [
       'Informe ao lead que ele passou para a próxima fase.',
       'Ofereça dois horários (manhã/tarde) para a reunião de 1h.',
@@ -1272,15 +1194,9 @@ function computeResultado() {
       `⏰ Prioridade do lead: ${priorLabel}`,
       'Envie o script completo para o closer via botão abaixo.'
     ];
+    if (decisorAlerta) actions.splice(2, 0, decisorAlerta);
   } else if (score >= 35) {
-    resultado  = 'cautela';
-    badgeClass = 'rbadge-warn';
-    tituloText = '⚠️ Agendar com Cautela';
-    motivo = motivoFraco || (fat < 30000
-      ? `Faturamento baixo para o ${produto.split('—')[0].trim()}. Pode ter dificuldade no ticket.`
-      : margem < 15
-        ? 'Margem de lucro baixa — capacidade de pagamento reduzida.'
-        : 'Perfil parcialmente qualificado. Alinhe expectativas com o closer.');
+    resultado = 'cautela'; badgeClass = 'rbadge-warn'; tituloText = '⚠️ Agendar com Cautela';
     actions = [
       'Informe ao lead que pode estar no perfil, mas há pontos a confirmar.',
       '⚠️ AVISE O CLOSER sobre os pontos fracos antes da reunião.',
@@ -1288,42 +1204,90 @@ function computeResultado() {
       `🛒 Produto indicado: ${produto}`,
       `💳 Negociação sugerida: ${negociacao}`,
       `⏰ Prioridade do lead: ${priorLabel}`,
-      motivoFraco ? `📊 Lógica: ${motivoFraco}` : ''
+      pontosFragos.length > 0 ? `📊 Pontos fracos: ${pontosFragos.join(', ')}` : ''
     ].filter(Boolean);
+    if (decisorAlerta) actions.splice(1, 0, decisorAlerta);
   } else {
-    resultado  = 'nao_agendar';
-    badgeClass = 'rbadge-no';
-    tituloText = '❌ Não Agendar';
-    motivo = criticos > 0
-      ? alertasMentira.filter(a => a.sev === 'critico').map(a => a.msg.replace(/🔴 /,'')).join(' | ')
-      : fat < 20000 && mesesParaPagar > 4
-        ? 'Faturamento muito baixo + margem insuficiente. Sem capacidade de pagamento real agora.'
-        : motivoFraco || 'Lead sem qualificação suficiente no momento.';
+    resultado = 'nao_agendar'; badgeClass = 'rbadge-no'; tituloText = '❌ Não Agendar';
     actions = [
-      'NÃO agende reunião com o closer agora.',
+      'NÃO agende reunião com o closer neste momento.',
       'Encerre a ligação de forma respeitosa e profissional.',
       criticos > 0 ? '🚨 Dados críticos inconsistentes — não avançar até esclarecer.' : 'Cadastre-o na base de nurturing para follow-up em 60-90 dias.',
-      `⏰ Prioridade declarada: ${priorLabel} — baixa urgência confirmada.`,
-      `📊 Lógica do diagnóstico: ${motivo}`
+      `⏰ Prioridade declarada: ${priorLabel}`,
     ];
+    if (decisorAlerta) actions.splice(2, 0, decisorAlerta);
   }
 
+  // ── LÓGICA DO DIAGNÓSTICO EXPLICATIVA ──
+  const lucroFmt = lucroEstimado > 0 ? 'R$'+lucroEstimado.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,'.') : '—';
+  const mesesFmt = mesesParaPagar < 99 ? mesesParaPagar.toFixed(1) : 'N/A';
+
+  const diagnosticoSections = [
+    {
+      label: '🛒 Por que este produto?',
+      text: isPAV
+        ? `Produto indicado: PAV — Programa de Aceleração de Vendas (R$24.997). Motivo: ${produtoLogica}. O PAV é recomendado para academias com estrutura suficiente para implementar um time comercial e processos de vendas. Ticket médio alto o suficiente para justificar o investimento.`
+        : `Produto indicado: Acelerador de Matrículas (R$1.997). Motivo: ${produtoLogica}. O Acelerador é o produto certo para academias menores ou studios que ainda não têm escala para o PAV. Ticket mais acessível e retorno mais rápido.`,
+      color: 'ok'
+    },
+    {
+      label: '💰 Análise de Capacidade de Pagamento (Budget)',
+      text: lucroEstimado > 0
+        ? `Faturamento declarado: R$${fat.toLocaleString('pt-BR')} | Margem: ${margem}% | Lucro líquido estimado: ${lucroFmt}/mês. O programa representa ${mesesFmt} meses de lucro. ${mesesParaPagar <= 1 ? 'Excelente capacidade — pode tentar à vista ou poucas parcelas.' : mesesParaPagar <= 3 ? 'Capacidade moderada — parcelamento em 6-12x é o caminho.' : 'Capacidade financeira apertada — closer deve confirmar limite de cartão e ausência de comprometimentos.'}${divida === 'sim' ? ' ⚠️ Atenção: lead declarou endividamento.' : ''}`
+        : 'Faturamento ou margem não informados — capacidade de pagamento não calculada.',
+      color: bantB === 'ok' ? 'ok' : bantB === 'warn' ? '' : 'danger'
+    },
+    {
+      label: '🎯 Necessidade Real (Need)',
+      text: desafio
+        ? `Desafio relatado: "${desafio}". Este é o problema que o programa precisa resolver. ${dor ? `Dor oculta identificada: "${dor}". O closer deve usar essa motivação pessoal como âncora de valor durante a reunião.` : 'Dor oculta não mapeada — o closer deve aprofundar esse ponto antes de qualquer apresentação.'}`
+        : 'Necessidade não mapeada claramente — o closer deve investigar o desafio real antes de apresentar qualquer solução.',
+      color: bantN === 'ok' ? 'ok' : 'warn'
+    },
+    {
+      label: '👥 Autoridade de Decisão (Authority)',
+      text: dec === 'unico'
+        ? `Lead declarou ser o único decisor.${cas === 'sim' ? conjuge === 'sim' ? ' Cônjuge confirmado na reunião — decisão pode ser tomada na hora.' : ' Cônjuge casado mas não confirmado na reunião — risco de bloqueio de decisão.' : ' Não casado — decisão direta.'}`
+        : dec === 'outro'
+          ? decisor2 === 'sim'
+            ? 'Há múltiplos decisores e o segundo decisor confirmou presença. Reunião pode prosseguir.'
+            : '⚠️ Há múltiplos decisores mas o segundo decisor NÃO confirmou presença. Altíssimo risco de reunião perdida. Não agendar sem confirmar todos.'
+          : 'Processo decisório não mapeado.',
+      color: bantA === 'ok' ? 'ok' : bantA === 'warn' ? '' : 'danger'
+    },
+    {
+      label: '⏰ Urgência (Timeline)',
+      text: prior === 'urgente'
+        ? 'Lead declarou urgência imediata. Excelente sinal — maior probabilidade de decisão na reunião.'
+        : prior === '6meses'
+          ? 'Lead declarou urgência nos próximos 6 meses. Risco moderado de adiamento. Closer deve criar urgência logo no início da reunião.'
+          : prior === '1ano'
+            ? '🚨 Lead declarou prazo de 1 ano ou mais. Altíssimo risco de no-show ou "não é o momento". Não agendar sem um motivo muito concreto de urgência.'
+            : 'Urgência não declarada — este ponto deve ser aprofundado.',
+      color: bantT === 'ok' ? 'ok' : bantT === 'warn' ? '' : 'danger'
+    },
+    pontosFragos.length > 0 ? {
+      label: '⚠️ Pontos Fracos Identificados',
+      text: 'Os seguintes critérios ficaram abaixo de 50% do potencial: ' + pontosFragos.join(', ') + '. O closer deve estar ciente dessas lacunas.',
+      color: 'warn'
+    } : null
+  ].filter(Boolean);
+
   return {
-    resultado, badgeClass, tituloText, produto, score, motivo, actions,
-    alertasMentira, negociacao, produtoLogica, breakdown
+    resultado, badgeClass, tituloText, produto, score, actions,
+    alertas, negociacao, breakdown, diagnosticoSections, bant, pontosFragos
   };
 }
 
 function goToResultado() {
   const data = computeResultado();
-  const nome = document.getElementById('lead-nome').value.trim();
+  const nome    = document.getElementById('lead-nome').value.trim();
   const empresa = document.getElementById('lead-empresa').value.trim();
 
   document.getElementById('wizard-steps').style.display = 'none';
   document.getElementById('screen-encerrar').style.display = 'none';
   document.getElementById('screen-resultado').style.display = 'block';
 
-  // Badge
   const badge = document.getElementById('rbadge');
   badge.className = 'resultado-badge ' + data.badgeClass;
   badge.textContent = data.resultado === 'agendar' ? '✅ Agendar' : data.resultado === 'cautela' ? '⚠️ Cautela' : '❌ Não Agendar';
@@ -1334,11 +1298,9 @@ function goToResultado() {
   document.getElementById('r-produto').textContent = data.produto;
   document.getElementById('r-chance').textContent = data.score + '%';
 
-  // Chance color
   const chanceEl = document.getElementById('r-chance');
   chanceEl.className = 'r-card-value ' + (data.score >= 60 ? 'g' : data.score >= 35 ? 'a' : 'r');
 
-  // Negociação
   const negBlock = document.getElementById('r-negociacao-block');
   if (data.negociacao && data.resultado !== 'nao_agendar') {
     negBlock.style.display = 'block';
@@ -1347,24 +1309,45 @@ function goToResultado() {
     negBlock.style.display = 'none';
   }
 
-  // Alertas de mentira/inconsistência
+  // BANT summary
+  const bantEl = document.getElementById('r-bant');
+  const bantLabels = { B:'Budget', A:'Authority', N:'Need', T:'Timeline' };
+  const bantEmoji = { B:'💰', A:'👤', N:'🎯', T:'⏰' };
+  bantEl.innerHTML = ['B','A','N','T'].map(k => {
+    const item = data.bant[k];
+    const cls = 'bant-' + item.status;
+    const statusLabel = item.status === 'ok' ? '✅ OK' : item.status === 'warn' ? '⚠️ Atenção' : '❌ Crítico';
+    return `<div class="bant-item">
+      <div class="bant-letter" style="color:${item.status==='ok'?'var(--green)':item.status==='warn'?'var(--amber)':'var(--red)'}">${bantEmoji[k]} ${k}</div>
+      <div class="bant-name">${bantLabels[k]}</div>
+      <span class="bant-status ${cls}">${statusLabel}</span>
+      <div class="bant-desc">${item.desc}</div>
+    </div>`;
+  }).join('');
+
+  // Alertas — só exibe se houver
   const alertaBlock = document.getElementById('r-alerta-block');
-  if (data.alertasMentira && data.alertasMentira.length > 0) {
+  const alertaList  = document.getElementById('r-alerta-list');
+  if (data.alertas && data.alertas.length > 0) {
     alertaBlock.style.display = 'block';
-    document.getElementById('r-alerta').innerHTML = data.alertasMentira.map(a => `• ${a}`).join('<br>');
+    alertaList.innerHTML = data.alertas.map(a =>
+      `<div class="alerta-item ${a.sev}">
+        <span class="alerta-sev sev-${a.sev}">${a.sev === 'critico' ? '🔴 CRÍTICO' : '🟡 SUSPEITO'}</span>
+        <span>${a.msg}</span>
+      </div>`
+    ).join('');
   } else {
     alertaBlock.style.display = 'none';
   }
 
-  // Motivo / lógica do diagnóstico
-  const mblock = document.getElementById('r-motivo-block');
-  const motivoTexto = data.produtoLogica ? data.produtoLogica + (data.motivo ? ' | ' + data.motivo : '') : data.motivo;
-  if (motivoTexto) {
-    mblock.style.display = 'block';
-    document.getElementById('r-motivo').textContent = motivoTexto;
-  } else {
-    mblock.style.display = 'none';
-  }
+  // Diagnóstico explicativo
+  const diagEl = document.getElementById('r-diagnostico-content');
+  diagEl.innerHTML = data.diagnosticoSections.map(s =>
+    `<div class="diag-section">
+      <div class="diag-section-label">${s.label}</div>
+      <div class="diag-section-text ${s.color||''}">${s.text}</div>
+    </div>`
+  ).join('');
 
   // Actions
   const al = document.getElementById('r-action-list');
@@ -1372,7 +1355,7 @@ function goToResultado() {
     `<li><div class="action-num">${i+1}</div><div>${a}</div></li>`
   ).join('');
 
-  // Breakdown das dimensões da fórmula
+  // Breakdown
   const breakEl = document.getElementById('r-breakdown-list');
   if (breakEl && data.breakdown) {
     breakEl.innerHTML = data.breakdown.map(d => {
@@ -1386,9 +1369,7 @@ function goToResultado() {
           <span style="font-size:13px;color:var(--text);font-weight:500">${d.label}</span>
           <span style="font-family:'DM Mono',monospace;font-size:12px;color:${barColor};font-weight:700">${ptsLabel}</span>
         </div>
-        ${d.max > 0 ? `<div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden">
-          <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;transition:width .5s ease"></div>
-        </div>` : ''}
+        ${d.max > 0 ? `<div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;transition:width .5s ease"></div></div>` : ''}
       </li>`;
     }).join('');
   }
@@ -1396,7 +1377,6 @@ function goToResultado() {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ══ SAVE & RESET ══
 function collectData(overrideResultado) {
   const data = computeResultado();
   return {
@@ -1421,7 +1401,11 @@ function collectData(overrideResultado) {
     resultado: overrideResultado || data.resultado,
     produto: data.produto,
     chanceCompra: overrideResultado === 'encerrar' ? '0' : String(data.score),
-    motivo: overrideResultado === 'encerrar' ? 'Fluxo negativo sem fundo de reserva' : data.motivo
+    motivo: overrideResultado === 'encerrar'
+      ? 'Fluxo negativo sem fundo de reserva'
+      : data.diagnosticoSections && data.diagnosticoSections[1]
+        ? data.diagnosticoSections[1].text.substring(0, 120)
+        : ''
   };
 }
 
@@ -1433,17 +1417,14 @@ function saveAndNewLead(type) {
 }
 
 function resetWizard() {
-  // Clear inputs
   ['lead-nome','lead-tel','lead-empresa','f-negocio','f-faturamento','f-margem','f-desafio','f-fat-esperado','f-margem-esp','f-dor'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
   document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('sel','sel-danger','sel-warn'));
   document.querySelectorAll('.cond').forEach(c => c.classList.remove('show'));
-
-  state.opts = {};
-  state.fields = {};
-
+  ['fat-feedback','cap-feedback'].forEach(id => { const el = document.getElementById(id); if(el) el.style.display='none'; });
+  state.opts = {}; state.fields = {};
   document.getElementById('screen-encerrar').style.display = 'none';
   document.getElementById('screen-resultado').style.display = 'none';
   document.getElementById('wizard-steps').style.display = 'block';
@@ -1452,19 +1433,33 @@ function resetWizard() {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ══ DOWNLOAD SCRIPT ══
 function buildScript() {
-  const nome = document.getElementById('lead-nome').value.trim();
+  const nome    = document.getElementById('lead-nome').value.trim();
   const empresa = document.getElementById('lead-empresa').value.trim();
-  const fatura = document.getElementById('f-faturamento').value;
-  const margem = document.getElementById('f-margem').value;
+  const fatura  = document.getElementById('f-faturamento').value;
+  const margem  = document.getElementById('f-margem').value;
   const desafio = document.getElementById('f-desafio').value.trim();
-  const dor = document.getElementById('f-dor').value.trim();
+  const dor     = document.getElementById('f-dor').value.trim();
   const negocio = document.getElementById('f-negocio').value.trim();
-  const data = computeResultado();
+  const data    = computeResultado();
 
   const fatMap = {'10000':'Até R$10k','20000':'R$10-20k','30000':'R$20-30k','50000':'R$30-50k','80000':'R$50-80k','120000':'R$80-120k','200000':'R$120-200k','300000':'Acima R$200k'};
   const marMap = {'5':'<10%','15':'10-20%','25':'20-30%','35':'30-40%','50':'>40%'};
+
+  const bantLines = ['B (Budget)','A (Authority)','N (Need)','T (Timeline)'].map((k,i) => {
+    const keys = ['B','A','N','T'];
+    const item = data.bant[keys[i]];
+    const status = item.status === 'ok' ? '✅' : item.status === 'warn' ? '⚠️' : '❌';
+    return `${status} ${k}: ${item.desc}`;
+  }).join('\n');
+
+  const alertasText = data.alertas && data.alertas.length > 0
+    ? '\n🚨 ALERTAS DE INCONSISTÊNCIA:\n' + data.alertas.map(a => `• [${a.sev.toUpperCase()}] ${a.msg}`).join('\n')
+    : '';
+
+  const diagText = data.diagnosticoSections
+    ? '\n' + data.diagnosticoSections.map(s => `${s.label}\n${s.text}`).join('\n\n')
+    : '';
 
   return `════════════════════════════════════════
    GFB — SCRIPT DE QUALIFICAÇÃO
@@ -1488,6 +1483,11 @@ Decisor: ${state.opts.dec === 'unico' ? 'É o único decisor' : 'Precisa consult
 Casado: ${state.opts.cas === 'sim' ? 'Sim' : state.opts.cas === 'nao' ? 'Não' : '—'}
 
 ────────────────────────────────────────
+ANÁLISE BANT
+────────────────────────────────────────
+${bantLines}
+
+────────────────────────────────────────
 NOTAS DO SDR
 ────────────────────────────────────────
 NEGÓCIO:
@@ -1499,8 +1499,8 @@ ${desafio || 'Não preenchido'}
 DOR OCULTA:
 ${dor || 'Não preenchido'}
 
-🎯 ORIENTAÇÃO PARA O CLOSER (baseado na dor oculta):
-${dor ? `O lead sinalizou que sua motivação real é: "${dor}". Use esse gatilho para conduzir a reunião — puxe para essa dor nos momentos de objeção e ancore o valor do programa na transformação que ele quer para a vida dele, não apenas nos números do negócio. Principais pontos a explorar na reunião: (1) como a situação atual está impedindo esse sonho/objetivo; (2) o que muda na vida dele quando resolver esse problema; (3) o quanto ele está disposto a investir para chegar lá.` : 'Dor oculta não mapeada — o closer deve aprofundar esse ponto logo no início da reunião antes de apresentar qualquer solução.'}
+🎯 ORIENTAÇÃO PARA O CLOSER:
+${dor ? `Motivação real do lead: "${dor}". Use esse gatilho nos momentos de objeção. Explore: (1) como a situação atual impede esse objetivo; (2) o que muda quando resolver; (3) quanto está disposto a investir.` : 'Dor oculta não mapeada — aprofundar no início da reunião antes de apresentar qualquer solução.'}
 
 ────────────────────────────────────────
 RESULTADO
@@ -1509,11 +1509,15 @@ DECISÃO: ${data.tituloText}
 PRODUTO RECOMENDADO: ${data.produto}
 FORMA DE NEGOCIAÇÃO: ${data.negociacao || '—'}
 CHANCE DE COMPRA: ${data.score}%
-LÓGICA DO DIAGNÓSTICO: ${data.produtoLogica || '—'}
-${data.motivo ? 'OBSERVAÇÃO: '+data.motivo : ''}
-${data.alertasMentira && data.alertasMentira.length > 0 ? '\n🚨 ALERTAS DE INCONSISTÊNCIA:\n' + data.alertasMentira.map(a => '• '+a).join('\n') : ''}
+${alertasText}
 
-AÇÕES PARA O CLOSER:
+────────────────────────────────────────
+LÓGICA DO DIAGNÓSTICO
+────────────────────────────────────────${diagText}
+
+────────────────────────────────────────
+AÇÕES PARA O CLOSER
+────────────────────────────────────────
 ${data.actions.map((a,i) => `${i+1}. ${a}`).join('\n')}
 
 ════════════════════════════════════════
@@ -1534,19 +1538,25 @@ function downloadScript() {
 }
 
 function copyWhatsapp() {
-  const nome = document.getElementById('lead-nome').value.trim();
+  const nome    = document.getElementById('lead-nome').value.trim();
   const empresa = document.getElementById('lead-empresa').value.trim();
-  const data = computeResultado();
+  const data    = computeResultado();
   const desafio = document.getElementById('f-desafio').value.trim();
-  const dor = document.getElementById('f-dor').value.trim();
-  const fat = document.getElementById('f-faturamento').value;
-  const fatMap = {'10000':'Até R$10k','20000':'R$10-20k','30000':'R$20-30k','50000':'R$30-50k','80000':'R$50-80k','120000':'R$80-120k','200000':'R$120-200k','300000':'Acima R$200k'};
+  const dor     = document.getElementById('f-dor').value.trim();
+  const fat     = document.getElementById('f-faturamento').value;
+  const fatMap  = {'10000':'Até R$10k','20000':'R$10-20k','30000':'R$20-30k','50000':'R$30-50k','80000':'R$50-80k','120000':'R$80-120k','200000':'R$120-200k','300000':'Acima R$200k'};
 
-  const dorCloser = dor
-    ? `🎯 *Orientação para a reunião:* A dor oculta do lead é "${dor}". Puxe para esse ponto nos momentos de objeção e ancore o valor do programa nessa transformação.`
-    : `🎯 *Orientação para a reunião:* Dor oculta não mapeada — aprofunde esse ponto logo no início antes de apresentar qualquer solução.`;
+  const bantLines = ['B','A','N','T'].map(k => {
+    const item = data.bant[k];
+    const s = item.status === 'ok' ? '✅' : item.status === 'warn' ? '⚠️' : '❌';
+    return `${s} *${k}:* ${item.desc}`;
+  }).join('\n');
 
-  const msg = `🎯 *NOVO LEAD QUALIFICADO — GFB*\n\n*Nome:* ${nome}\n*Empresa:* ${empresa}\n*Faturamento:* ${fatMap[fat] || '—'}\n*Desafio:* ${desafio || '—'}\n*Dor Oculta:* ${dor || '—'}\n\n✅ *Resultado:* ${data.tituloText}\n🛒 *Produto:* ${data.produto}\n💳 *Negociação:* ${data.negociacao || '—'}\n📊 *Chance:* ${data.score}%\n\n${dorCloser}\n\n${data.motivo ? '⚠️ _Diagnóstico: '+data.motivo+'_\n' : ''}${data.alertasMentira && data.alertasMentira.length > 0 ? '\n🚨 *Alertas:* ' + data.alertasMentira.join(' | ') : ''}`;
+  const alertasText = data.alertas && data.alertas.length > 0
+    ? '\n🚨 *Alertas:* ' + data.alertas.map(a => `[${a.sev}] ${a.msg}`).join(' | ')
+    : '';
+
+  const msg = `🎯 *NOVO LEAD QUALIFICADO — GFB*\n\n*Nome:* ${nome}\n*Empresa:* ${empresa}\n*Faturamento:* ${fatMap[fat]||'—'}\n*Desafio:* ${desafio||'—'}\n*Dor Oculta:* ${dor||'—'}\n\n📊 *BANT:*\n${bantLines}\n\n✅ *Resultado:* ${data.tituloText}\n🛒 *Produto:* ${data.produto}\n💳 *Negociação:* ${data.negociacao||'—'}\n📈 *Chance:* ${data.score}%\n\n🎯 *Para o Closer:* ${dor ? `Dor oculta: "${dor}". Use como âncora de valor nos momentos de objeção.` : 'Dor oculta não mapeada — aprofundar no início da reunião.'}${alertasText}`;
 
   navigator.clipboard.writeText(msg).then(() => {
     alert('Mensagem copiada! Cole no WhatsApp do closer.');
@@ -1555,7 +1565,7 @@ function copyWhatsapp() {
   });
 }
 
-// ══ GESTOR TABLE ══
+// ── GESTOR ──
 function faturamentoLabel(v) {
   const m = {'10000':'<R$10k','20000':'R$10-20k','30000':'R$20-30k','50000':'R$30-50k','80000':'R$50-80k','120000':'R$80-120k','200000':'R$120-200k','300000':'>R$200k'};
   return m[v] || v || '—';
@@ -1563,12 +1573,10 @@ function faturamentoLabel(v) {
 
 function renderGestorTable(filter) {
   const leads = getLeads();
-
-  // Stats
   const total = leads.length;
-  const ok = leads.filter(l => l.resultado === 'agendar').length;
+  const ok   = leads.filter(l => l.resultado === 'agendar').length;
   const warn = leads.filter(l => l.resultado === 'cautela').length;
-  const no = leads.filter(l => l.resultado === 'nao_agendar' || l.resultado === 'encerrar').length;
+  const no   = leads.filter(l => l.resultado === 'nao_agendar' || l.resultado === 'encerrar').length;
   document.getElementById('g-total').textContent = total;
   document.getElementById('g-ok').textContent = ok;
   document.getElementById('g-warn').textContent = warn;
@@ -1579,7 +1587,6 @@ function renderGestorTable(filter) {
     : leads;
 
   const container = document.getElementById('gestor-table-container');
-
   if (!filtered.length) {
     container.innerHTML = `<div class="empty-state"><div class="es-icon">📋</div><p>${filter ? 'Nenhum resultado encontrado.' : 'Nenhum lead qualificado ainda.<br>Comece usando o painel do SDR.'}</p></div>`;
     return;
@@ -1592,98 +1599,76 @@ function renderGestorTable(filter) {
     encerrar: '<span class="badge badge-no">🛑 Encerrado</span>'
   };
 
-  const rows = [...filtered].reverse().map((l, i) => {
+  const rows = [...filtered].reverse().map(l => {
     const score = parseInt(l.chanceCompra) || 0;
     const barColor = score >= 60 ? '#16c784' : score >= 35 ? '#f59e0b' : '#ef4444';
     return `<tr>
-      <td style="font-weight:600;color:var(--text)">${l.nome || '—'}</td>
-      <td style="color:var(--muted)">${l.empresa || '—'}</td>
+      <td style="font-weight:600;color:var(--text)">${l.nome||'—'}</td>
+      <td style="color:var(--muted)">${l.empresa||'—'}</td>
       <td>${faturamentoLabel(l.faturamento)}</td>
-      <td>${badgeMap[l.resultado] || l.resultado}</td>
-      <td>
-        <span class="chance-mini">${score}%</span>
-        <span class="cbar"><span class="cbar-fill" style="width:${score}%;background:${barColor}"></span></span>
-      </td>
-      <td><div class="motivo-cell">${l.motivo || l.desafio?.substring(0,60) || '—'}</div></td>
-      <td style="color:var(--muted);font-size:12px">${l.dataHora || '—'}</td>
+      <td>${badgeMap[l.resultado]||l.resultado}</td>
+      <td><span class="chance-mini">${score}%</span><span class="cbar"><span class="cbar-fill" style="width:${score}%;background:${barColor}"></span></span></td>
+      <td><div class="motivo-cell">${l.motivo||l.desafio?.substring(0,60)||'—'}</div></td>
+      <td style="color:var(--muted);font-size:12px">${l.dataHora||'—'}</td>
       <td><button class="btn-tbdl" onclick="downloadLeadScript(${l.id})">⬇️ Script</button></td>
     </tr>`;
   }).join('');
 
   container.innerHTML = `<table>
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Empresa</th>
-        <th>Faturamento</th>
-        <th>Resultado</th>
-        <th>Chance</th>
-        <th>Observação</th>
-        <th>Data/Hora</th>
-        <th></th>
-      </tr>
-    </thead>
+    <thead><tr><th>Nome</th><th>Empresa</th><th>Faturamento</th><th>Resultado</th><th>Chance</th><th>Observação</th><th>Data/Hora</th><th></th></tr></thead>
     <tbody>${rows}</tbody>
   </table>`;
 }
 
 function downloadLeadScript(id) {
   const leads = getLeads();
-  const lead = leads.find(l => l.id === id);
-  if (!lead) return;
-
+  const l = leads.find(x => x.id === id);
+  if (!l) return;
   const fatMap = {'10000':'Até R$10k','20000':'R$10-20k','30000':'R$20-30k','50000':'R$30-50k','80000':'R$50-80k','120000':'R$80-120k','200000':'R$120-200k','300000':'Acima R$200k'};
   const marMap = {'5':'<10%','15':'10-20%','25':'20-30%','35':'30-40%','50':'>40%'};
-
   const text = `════════════════════════════════════════
    GFB — SCRIPT DE QUALIFICAÇÃO
-   Gerado em: ${lead.dataHora}
+   Gerado em: ${l.dataHora}
 ════════════════════════════════════════
 
-LEAD: ${lead.nome}
-EMPRESA: ${lead.empresa}
-TELEFONE: ${lead.tel || '—'}
-ORIGEM: ${lead.origem || '—'}
+LEAD: ${l.nome}
+EMPRESA: ${l.empresa}
+TELEFONE: ${l.tel||'—'}
+ORIGEM: ${l.origem||'—'}
 
 ────────────────────────────────────────
 DADOS COLETADOS
 ────────────────────────────────────────
-Faturamento Mensal: ${fatMap[lead.faturamento] || lead.faturamento || '—'}
-Margem de Lucro: ${marMap[lead.margem] || lead.margem || '—'}
-Endividamento: ${lead.divida === 'sim' ? 'Sim' : 'Não'}
-Fluxo de Caixa: ${lead.fluxo === 'neg' ? 'Negativo' : lead.fluxo === 'pos' ? 'Positivo' : '—'}
-Fundo de Reserva: ${lead.fundo === 'sim' ? 'Tem' : lead.fundo === 'nao' ? 'Não tem' : '—'}
-Decisor: ${lead.decisor === 'unico' ? 'É o único decisor' : lead.decisor === 'outro' ? 'Precisa consultar outros' : '—'}
+Faturamento Mensal: ${fatMap[l.faturamento]||l.faturamento||'—'}
+Margem de Lucro: ${marMap[l.margem]||l.margem||'—'}
+Endividamento: ${l.divida === 'sim' ? 'Sim' : 'Não'}
+Fluxo de Caixa: ${l.fluxo === 'neg' ? 'Negativo' : l.fluxo === 'pos' ? 'Positivo' : '—'}
+Fundo de Reserva: ${l.fundo === 'sim' ? 'Tem' : l.fundo === 'nao' ? 'Não tem' : '—'}
+Decisor: ${l.decisor === 'unico' ? 'É o único decisor' : l.decisor === 'outro' ? 'Precisa consultar outros' : '—'}
 
 ────────────────────────────────────────
 NOTAS DO SDR
 ────────────────────────────────────────
-NEGÓCIO:
-${lead.negocio || 'Não preenchido'}
-
-MAIOR DESAFIO:
-${lead.desafio || 'Não preenchido'}
-
-DOR OCULTA:
-${lead.dor || 'Não preenchido'}
+NEGÓCIO:\n${l.negocio||'Não preenchido'}
+MAIOR DESAFIO:\n${l.desafio||'Não preenchido'}
+DOR OCULTA:\n${l.dor||'Não preenchido'}
 
 ────────────────────────────────────────
 RESULTADO
 ────────────────────────────────────────
-DECISÃO: ${lead.resultado?.toUpperCase() || '—'}
-PRODUTO RECOMENDADO: ${lead.produto || '—'}
-CHANCE DE COMPRA: ${lead.chanceCompra || '—'}%
-${lead.motivo ? 'OBSERVAÇÃO: '+lead.motivo : ''}
+DECISÃO: ${l.resultado?.toUpperCase()||'—'}
+PRODUTO RECOMENDADO: ${l.produto||'—'}
+CHANCE DE COMPRA: ${l.chanceCompra||'—'}%
+${l.motivo ? 'DIAGNÓSTICO: '+l.motivo : ''}
 
 ════════════════════════════════════════
    Gestão Fitness Brasil — GFB
 ════════════════════════════════════════`;
-
   const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `GFB_${lead.nome?.replace(/\s+/g,'_') || 'lead'}_${lead.id}.txt`;
+  a.download = `GFB_${l.nome?.replace(/\s+/g,'_')||'lead'}_${l.id}.txt`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -1691,14 +1676,11 @@ ${lead.motivo ? 'OBSERVAÇÃO: '+lead.motivo : ''}
 function exportAll() {
   const leads = getLeads();
   if (!leads.length) { alert('Nenhum lead para exportar.'); return; }
-
-  const fatMap = {'10000':'Até R$10k','20000':'R$10-20k','30000':'R$20-30k','50000':'R$30-50k','80000':'R$50-80k','120000':'R$80-120k','200000':'R$120-200k','300000':'>R$200k'};
-
-  let csv = 'Nome,Empresa,Faturamento,Resultado,Produto,Chance,Motivo,Data\n';
+  const fatMap = {'10000':'<R$10k','20000':'R$10-20k','30000':'R$20-30k','50000':'R$30-50k','80000':'R$50-80k','120000':'R$80-120k','200000':'R$120-200k','300000':'>R$200k'};
+  let csv = 'Nome,Empresa,Faturamento,Resultado,Produto,Chance,Diagnóstico,Data\n';
   leads.forEach(l => {
     csv += `"${l.nome}","${l.empresa}","${fatMap[l.faturamento]||l.faturamento}","${l.resultado}","${l.produto}","${l.chanceCompra}%","${(l.motivo||'').replace(/"/g,"'")}","${l.dataHora}"\n`;
   });
-
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -1714,14 +1696,12 @@ function clearAll() {
   renderGestorTable();
 }
 
-// ══ INIT ══
+// INIT
 showStep(0);
 updateProgress(0);
-
-// Add progress bar DOM
 const progressWrap = document.createElement('div');
 progressWrap.className = 'progress-wrap';
-progressWrap.innerHTML = '<div class="progress-track"><div class="progress-fill" style="width:0%"></div></div><span class="progress-label">Passo 1/12</span>';
+progressWrap.innerHTML = '<div class="progress-track"><div class="progress-fill" style="width:0%"></div></div><span class="progress-label">Passo 1/13</span>';
 document.querySelector('.sdr-layout').insertBefore(progressWrap, document.querySelector('.sdr-layout').firstChild);
 </script>
 </body>
