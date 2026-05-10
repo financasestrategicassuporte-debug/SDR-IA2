@@ -217,12 +217,9 @@ tr:hover td { background:rgba(255,255,255,.015); }
         <label class="field-label">Como chegou até nós?</label>
         <select class="field-select" id="lead-origem">
           <option value="">Selecione...</option>
-          <option value="Instagram">Instagram</option>
-          <option value="Indicação">Indicação</option>
-          <option value="Tráfego Pago">Tráfego Pago</option>
-          <option value="WhatsApp">WhatsApp</option>
-          <option value="Evento/Sebrae">Evento/Sebrae</option>
-          <option value="Outro">Outro</option>
+          <option value="Funil Webinário Quente — Preencheram Aplicação">Funil Webinário Quente — Preencheram Aplicação</option>
+          <option value="Funil Webinário Frio — Até 40K">Funil Webinário Frio — Até 40K</option>
+          <option value="Funil Webinário Frio — +40K">Funil Webinário Frio — +40K</option>
         </select>
       </div>
 
@@ -242,7 +239,7 @@ tr:hover td { background:rgba(255,255,255,.015); }
         <div class="script-text">
           <strong id="lead-nome-s1">[Nome do candidato]</strong>?<br><br>
           Aqui é o <strong>[Seu nome]</strong>. Como você está? Tudo bem?<br><br>
-          Vamos começar a nossa entrevista, então. Será uma conversa bem rápida. Cerca de <strong>10 a 12 minutos</strong>.
+          Vamos começar a nossa entrevista, então. Será uma conversa bem rápida.
         </div>
       </div>
 
@@ -266,7 +263,7 @@ tr:hover td { background:rgba(255,255,255,.015); }
         <span class="script-label">🎙 FALE ISSO</span>
         <div class="script-text">
           O objetivo dessa ligação é entender melhor o seu negócio e o seu desafio e analisarmos juntos se você tem o perfil de empresa que eu estou buscando <strong>para</strong> receber 1 hora de consultoria gratuita e participar do nosso <strong>programa de aceleração para academias de todo o Brasil</strong>.<br><br>
-          Se eu entender que você tem o perfil, eu vou passar você para a próxima fase do nosso processo, que é uma <strong>reunião de 1 hora em vídeo-conferência</strong> para eu te ajudar e apresentar todo o programa e tirar todas as dúvidas. Se ao final dessa reunião de 1 hora, fizer sentido para você e para mim você estar nesse programa, daí sim, nós fazemos sua inscrição no programa.
+          Se eu entender que você tem o perfil, eu vou passar você para a próxima fase do nosso processo, que é uma <strong>reunião de 1 hora em vídeo-conferência</strong> para eu te ajudar e apresentar todo o programa e tirar todas as dúvidas.
         </div>
       </div>
 
@@ -313,7 +310,7 @@ tr:hover td { background:rgba(255,255,255,.015); }
         <div class="script-block">
           <span class="script-label">🎙 SE JÁ CONHECE — FALE ISSO</span>
           <div class="script-text">
-            Que ótimo! Então você já sabe um pouco do que a gente faz. Pode ter certeza que esse programa tem ajudado academias a crescerem de forma acelerada. Vamos em frente com a entrevista!
+            Que ótimo! Então você já sabe um pouco do que a gente faz. Vamos em frente com a entrevista!
           </div>
         </div>
       </div>
@@ -712,8 +709,18 @@ tr:hover td { background:rgba(255,255,255,.015); }
         </div>
       </div>
 
+      <div id="r-negociacao-block" class="r-card" style="margin-bottom:18px;display:none">
+        <div class="r-card-label">💳 Forma de Negociação Recomendada</div>
+        <div id="r-negociacao" class="r-card-value g" style="font-size:14px;font-weight:500;line-height:1.5;margin-top:4px;">—</div>
+      </div>
+
+      <div id="r-alerta-block" class="r-card" style="margin-bottom:18px;display:none;border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.07)">
+        <div class="r-card-label" style="color:var(--amber)">🚨 Alertas de Inconsistência / Possível Mentira</div>
+        <div id="r-alerta" class="r-card-value a" style="font-size:13px;font-weight:500;line-height:1.7;margin-top:4px;">—</div>
+      </div>
+
       <div id="r-motivo-block" class="r-card" style="margin-bottom:18px;display:none">
-        <div class="r-card-label">Observação / Motivo</div>
+        <div class="r-card-label">Lógica do Diagnóstico</div>
         <div id="r-motivo" class="r-card-value a" style="font-size:14px;font-weight:500;line-height:1.5;margin-top:4px;">—</div>
       </div>
 
@@ -924,80 +931,196 @@ function showEncerrar() {
 function computeResultado() {
   const fat = parseInt(document.getElementById('f-faturamento').value) || 0;
   const margem = parseInt(document.getElementById('f-margem').value) || 0;
+  const fatEsp = parseInt(document.getElementById('f-fat-esperado').value) || 0;
   const divida = state.opts.divida;
   const fluxo = state.opts.fluxo;
   const fundo = state.opts.fundo;
   const dec = state.opts.dec;
-  const cas = state.opts.cas;
   const dor = (document.getElementById('f-dor').value || '').trim();
   const desafio = (document.getElementById('f-desafio').value || '').trim();
+  const negocio = (document.getElementById('f-negocio').value || '').trim();
+  const origem = document.getElementById('lead-origem').value || '';
 
-  // Produto
+  // ── DETECÇÃO DE INCONSISTÊNCIAS / POSSÍVEL MENTIRA ──
+  let alertasMentira = [];
+
+  // Margem muito alta com faturamento baixo é atípico no setor fitness
+  if (fat <= 20000 && margem >= 35) {
+    alertasMentira.push('⚠️ Margem acima de 30% com faturamento abaixo de R$20k é atípico para o setor — verificar se os números são reais.');
+  }
+  // Margem altíssima em qualquer faturamento sem estrutura forte
+  if (margem >= 50 && fat < 50000) {
+    alertasMentira.push('⚠️ Margem acima de 40% com faturamento abaixo de R$50k raramente acontece em academias — questionar custos fixos declarados.');
+  }
+  // Diz que não tem dívida mas faturamento muito baixo sem reserva: inconsistente
+  if (fat <= 10000 && divida === 'nao' && margem >= 25) {
+    alertasMentira.push('⚠️ Faturamento até R$10k com margem alta e sem dívidas: verifique se o lead está confundindo faturamento com lucro.');
+  }
+  // Expectativa de crescimento desproporcional (mais que 3x o faturamento atual)
+  if (fatEsp > 0 && fat > 0 && fatEsp > fat * 3) {
+    alertasMentira.push('⚠️ Faturamento esperado mais de 3x acima do atual — expectativa pode estar inflada. Alinhar realidade antes de avançar.');
+  }
+  // Tem dívida + fluxo negativo + diz ter fundo: pouco provável ter reserva real
+  if (divida === 'sim' && fluxo === 'neg' && fundo === 'sim' && fat < 30000) {
+    alertasMentira.push('⚠️ Fluxo negativo com faturamento baixo e fundo de reserva declarado: checar se o fundo é real ou apenas para "passar" na triagem.');
+  }
+
+  // ── PRODUTO RECOMENDADO ──
+  // PAV exige min R$40k (usamos 50000 como faixa "R$30-50k" inclui 40k+, e 80000 é acima)
+  // Acelerador: até ~40k (usamos fat <= 30000 como centro, mas se entre 30-50k e origem frio até 40k → Acelerador)
   let produto = '';
-  if (fat <= 30000) produto = 'Acelerador de Matrículas (Pack de Aulas)';
-  else if (fat <= 80000) produto = 'Programa de Aceleração (PAV)';
-  else produto = 'Mentoria Black Belt';
+  let produtoLogica = '';
 
-  // Score
+  const origemFrioAte40k = origem.includes('Até 40K') || origem.includes('ate 40') || origem.includes('até 40');
+  const origemFrioPlusMais40k = origem.includes('+40K') || origem.includes('+40k');
+  const origemQuente = origem.includes('Quente');
+
+  if (fat <= 30000) {
+    produto = 'Acelerador de Matrículas — R$1.997';
+    produtoLogica = 'Faturamento até R$30k indica perfil de pequena academia/studio. Produto: Acelerador de Matrículas.';
+  } else if (fat === 50000) {
+    // faixa R$30-50k — zona de transição
+    if (origemFrioAte40k) {
+      produto = 'Acelerador de Matrículas — R$1.997';
+      produtoLogica = 'Origem "Funil Frio Até 40K" + faixa R$30-50k → perfil Acelerador.';
+    } else {
+      produto = 'PAV — Programa de Aceleração de Vendas — R$24.997';
+      produtoLogica = 'Faixa R$30-50k com origem neutra ou frio +40K → avaliar PAV se estrutura permitir.';
+    }
+  } else {
+    // fat >= 80000 → PAV
+    produto = 'PAV — Programa de Aceleração de Vendas — R$24.997';
+    produtoLogica = 'Faturamento acima de R$50k indica estrutura compatível com o PAV.';
+  }
+
+  // ── FORMA DE NEGOCIAÇÃO RECOMENDADA ──
+  let negociacao = '';
+  const isPAV = produto.includes('PAV');
+  const isAcelerador = produto.includes('Acelerador');
+
+  if (isAcelerador) {
+    // Produto de R$1.997
+    if (fat <= 10000 || (divida === 'sim' && fluxo === 'neg')) {
+      negociacao = '💳 Parcelado no cartão em até 12x (R$166/mês) — faturamento muito baixo, não forçar à vista.';
+    } else if (margem >= 25 && divida === 'nao') {
+      negociacao = '💳 Cartão à vista ou em até 3x — margem saudável e sem dívidas: tentar fechar no máximo 3 parcelas.';
+    } else {
+      negociacao = '💳 Entrada de 50% (R$998) + restante em até 6x no cartão — perfil intermediário.';
+    }
+  } else {
+    // PAV — R$24.997
+    if (fat >= 80000 && margem >= 25 && divida === 'nao') {
+      negociacao = '💳 Cartão à vista ou em até 6x — faturamento e margem fortes. Tentar fechar em menos parcelas.';
+    } else if (fat >= 50000 && (divida === 'nao' || fluxo === 'pos')) {
+      negociacao = '💳 Entrada de 30-50% no cartão + restante em até 12x — perfil PAV com capacidade moderada.';
+    } else {
+      negociacao = '💳 Parcelado em até 12x no cartão (R$2.083/mês) — verificar limite disponível antes da reunião com o closer.';
+    }
+  }
+
+  // ── SCORE DE PROBABILIDADE DE VENDA ──
   let score = 0;
-  let motivo = '';
 
-  if (fat >= 30000) score += 20;
-  if (fat >= 80000) score += 15;
-  if (margem >= 20) score += 15;
-  if (margem >= 35) score += 10;
+  // Faturamento
+  if (fat >= 80000) score += 20;
+  else if (fat >= 50000) score += 15;
+  else if (fat >= 30000) score += 10;
+  else if (fat >= 10000) score += 5;
+
+  // Margem
+  if (margem >= 35) score += 20;
+  else if (margem >= 25) score += 15;
+  else if (margem >= 15) score += 8;
+
+  // Situação financeira
   if (!divida || divida === 'nao') score += 15;
-  if (divida === 'sim' && fluxo === 'pos') score += 5;
-  if (dor.length > 20) score += 15;
-  if (desafio.length > 20) score += 5;
-  if (dec === 'unico') score += 5;
+  else if (divida === 'sim' && fluxo === 'pos') score += 8;
+  else if (divida === 'sim' && fluxo === 'neg' && fundo === 'sim') score += 3;
 
-  score = Math.min(score, 95);
+  // Dor oculta clara = motivação de compra real
+  if (dor.length > 40) score += 15;
+  else if (dor.length > 10) score += 8;
 
-  let resultado, badgeClass, tituloText, actions;
+  // Desafio bem definido = consciência do problema
+  if (desafio.length > 40) score += 8;
+  else if (desafio.length > 10) score += 4;
+
+  // Decisor único = menos atrito no fechamento
+  if (dec === 'unico') score += 7;
+
+  // Origem quente (webinário quente + aplicação) = intenção mais alta
+  if (origemQuente) score += 10;
+  else if (origemFrioPlusMais40k) score += 5;
+
+  // Penalidade por inconsistências detectadas
+  score -= (alertasMentira.length * 8);
+
+  score = Math.max(0, Math.min(score, 95));
+
+  // ── DECISÃO FINAL ──
+  let resultado, badgeClass, tituloText, actions, motivo;
+
+  // Lógica de motivo base
+  let motivoBase = '';
+  if (alertasMentira.length > 0) motivoBase = alertasMentira[0];
 
   if (score >= 60) {
     resultado = 'agendar';
     badgeClass = 'rbadge-ok';
     tituloText = '✅ Agendar Reunião com o Closer';
+    motivo = alertasMentira.length > 0
+      ? alertasMentira.join(' | ')
+      : '';
     actions = [
       'Informe ao lead que ele passou para a próxima fase.',
       'Use o script 1.5 para confirmar que ele tem o perfil.',
-      'Ofereça dois horários (manhã/tarde) para a reunião de 1h.',
-      'Confirme presença de TODOS os decisores (cônjuge incluído se casado).',
+      'Ofereça dois horários (manhã/tarde) para a reunião.',
+      'Confirme presença de TODOS os decisores (cônjuge incluído, se casado).',
+      `Produto indicado: ${produto}`,
+      `Negociação sugerida: ${negociacao}`,
       'Envie o script completo para o closer via botão abaixo.'
     ];
   } else if (score >= 35) {
     resultado = 'cautela';
     badgeClass = 'rbadge-warn';
     tituloText = '⚠️ Agendar com Cautela';
-    motivo = fat < 30000
-      ? 'Faturamento abaixo do ideal. Pode ter dificuldade no ticket.'
-      : margem < 15
-        ? 'Margem de lucro baixa. Capacidade de pagamento reduzida.'
-        : 'Perfil parcialmente qualificado. Alinhe expectativas com o closer.';
+    motivo = alertasMentira.length > 0
+      ? alertasMentira.join(' | ')
+      : fat < 30000
+        ? `Faturamento abaixo do ideal para o ${produto.split('—')[0].trim()}. Pode ter dificuldade no ticket.`
+        : margem < 15
+          ? 'Margem de lucro baixa. Capacidade de pagamento reduzida.'
+          : 'Perfil parcialmente qualificado. Alinhe expectativas com o closer.';
     actions = [
-      'Informe ao lead que ele pode estar no perfil, mas precisa confirmar.',
+      'Informe ao lead que pode estar no perfil, mas precisa confirmar alguns pontos.',
       'AVISE O CLOSER sobre os pontos fracos antes da reunião.',
-      'Priorize descobrir a dor oculta antes de agendar.',
-      'Se o faturamento crescer ou a margem melhorar, o fit é alto.'
+      alertasMentira.length > 0 ? '🚨 ATENÇÃO: inconsistências nos dados — peça comprovação antes da reunião.' : 'Priorize aprofundar a dor oculta antes de agendar.',
+      `Produto indicado: ${produto}`,
+      `Negociação sugerida: ${negociacao}`,
+      'Se o faturamento crescer ou a margem melhorar, o fit melhora muito.'
     ];
   } else {
     resultado = 'nao_agendar';
     badgeClass = 'rbadge-no';
     tituloText = '❌ Não Agendar';
-    motivo = fat < 20000
-      ? 'Faturamento muito baixo. Não tem capacidade de pagamento para o programa.'
-      : 'Lead sem qualificação suficiente no momento. Retornar em 60-90 dias.';
+    motivo = alertasMentira.length > 0
+      ? alertasMentira.join(' | ')
+      : fat < 20000
+        ? 'Faturamento muito baixo. Capacidade de pagamento insuficiente para qualquer produto.'
+        : 'Lead sem qualificação suficiente no momento. Retornar em 60-90 dias.';
     actions = [
       'NÃO agende reunião com o closer agora.',
       'Encerre a ligação de forma respeitosa e profissional.',
-      'Informe que o programa não é o momento certo para ele.',
-      'Cadastre-o na base de nurturing para follow-up em 60-90 dias.'
+      'Informe que o momento atual não é o ideal para o programa.',
+      alertasMentira.length > 0 ? '🚨 Dados inconsistentes identificados — não avançar até esclarecer.' : 'Cadastre-o na base de nurturing para follow-up em 60-90 dias.',
+      'Motivo da lógica: ' + motivo
     ];
   }
 
-  return { resultado, badgeClass, tituloText, produto, score, motivo, actions };
+  return {
+    resultado, badgeClass, tituloText, produto, score, motivo, actions,
+    alertasMentira, negociacao, produtoLogica
+  };
 }
 
 function goToResultado() {
@@ -1024,11 +1147,30 @@ function goToResultado() {
   const chanceEl = document.getElementById('r-chance');
   chanceEl.className = 'r-card-value ' + (data.score >= 60 ? 'g' : data.score >= 35 ? 'a' : 'r');
 
-  // Motivo block
+  // Negociação
+  const negBlock = document.getElementById('r-negociacao-block');
+  if (data.negociacao && data.resultado !== 'nao_agendar') {
+    negBlock.style.display = 'block';
+    document.getElementById('r-negociacao').textContent = data.negociacao;
+  } else {
+    negBlock.style.display = 'none';
+  }
+
+  // Alertas de mentira/inconsistência
+  const alertaBlock = document.getElementById('r-alerta-block');
+  if (data.alertasMentira && data.alertasMentira.length > 0) {
+    alertaBlock.style.display = 'block';
+    document.getElementById('r-alerta').innerHTML = data.alertasMentira.map(a => `• ${a}`).join('<br>');
+  } else {
+    alertaBlock.style.display = 'none';
+  }
+
+  // Motivo / lógica do diagnóstico
   const mblock = document.getElementById('r-motivo-block');
-  if (data.motivo) {
+  const motivoTexto = data.produtoLogica ? data.produtoLogica + (data.motivo ? ' | ' + data.motivo : '') : data.motivo;
+  if (motivoTexto) {
     mblock.style.display = 'block';
-    document.getElementById('r-motivo').textContent = data.motivo;
+    document.getElementById('r-motivo').textContent = motivoTexto;
   } else {
     mblock.style.display = 'none';
   }
@@ -1150,8 +1292,11 @@ RESULTADO
 ────────────────────────────────────────
 DECISÃO: ${data.tituloText}
 PRODUTO RECOMENDADO: ${data.produto}
+FORMA DE NEGOCIAÇÃO: ${data.negociacao || '—'}
 CHANCE DE COMPRA: ${data.score}%
+LÓGICA DO DIAGNÓSTICO: ${data.produtoLogica || '—'}
 ${data.motivo ? 'OBSERVAÇÃO: '+data.motivo : ''}
+${data.alertasMentira && data.alertasMentira.length > 0 ? '\n🚨 ALERTAS DE INCONSISTÊNCIA:\n' + data.alertasMentira.map(a => '• '+a).join('\n') : ''}
 
 AÇÕES PARA O CLOSER:
 ${data.actions.map((a,i) => `${i+1}. ${a}`).join('\n')}
@@ -1182,7 +1327,7 @@ function copyWhatsapp() {
   const fat = document.getElementById('f-faturamento').value;
   const fatMap = {'10000':'Até R$10k','20000':'R$10-20k','30000':'R$20-30k','50000':'R$30-50k','80000':'R$50-80k','120000':'R$80-120k','200000':'R$120-200k','300000':'Acima R$200k'};
 
-  const msg = `🎯 *NOVO LEAD QUALIFICADO — GFB*\n\n*Nome:* ${nome}\n*Empresa:* ${empresa}\n*Faturamento:* ${fatMap[fat] || '—'}\n*Desafio:* ${desafio || '—'}\n*Dor Oculta:* ${dor || '—'}\n\n✅ *Resultado:* ${data.tituloText}\n🛒 *Produto:* ${data.produto}\n📊 *Chance:* ${data.score}%\n\n${data.motivo ? '⚠️ _'+data.motivo+'_' : ''}`;
+  const msg = `🎯 *NOVO LEAD QUALIFICADO — GFB*\n\n*Nome:* ${nome}\n*Empresa:* ${empresa}\n*Faturamento:* ${fatMap[fat] || '—'}\n*Desafio:* ${desafio || '—'}\n*Dor Oculta:* ${dor || '—'}\n\n✅ *Resultado:* ${data.tituloText}\n🛒 *Produto:* ${data.produto}\n💳 *Negociação:* ${data.negociacao || '—'}\n📊 *Chance:* ${data.score}%\n\n${data.motivo ? '⚠️ _Diagnóstico: '+data.motivo+'_\n' : ''}${data.alertasMentira && data.alertasMentira.length > 0 ? '\n🚨 *Alertas:* ' + data.alertasMentira.join(' | ') : ''}`;
 
   navigator.clipboard.writeText(msg).then(() => {
     alert('Mensagem copiada! Cole no WhatsApp do closer.');
