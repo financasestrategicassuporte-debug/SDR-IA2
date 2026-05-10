@@ -731,6 +731,11 @@ tr:hover td { background:rgba(255,255,255,.015); }
       </div>
 
       <div class="action-block">
+        <h3>📊 Breakdown da Fórmula de Chance</h3>
+        <ul id="r-breakdown-list" style="list-style:none;padding:0"></ul>
+      </div>
+
+      <div class="action-block">
         <h3>📎 Enviar para o Closer</h3>
         <div class="dl-row">
           <button class="btn-dl main" onclick="downloadScript()">⬇️ Baixar Script Completo</button>
@@ -930,193 +935,316 @@ function showEncerrar() {
 
 // ══ RESULTADO LOGIC ══
 function computeResultado() {
-  const fat = parseInt(document.getElementById('f-faturamento').value) || 0;
-  const margem = parseInt(document.getElementById('f-margem').value) || 0;
+  const fat    = parseInt(document.getElementById('f-faturamento').value)  || 0;
+  const margem = parseInt(document.getElementById('f-margem').value)       || 0;
   const fatEsp = parseInt(document.getElementById('f-fat-esperado').value) || 0;
   const divida = state.opts.divida;
-  const fluxo = state.opts.fluxo;
-  const fundo = state.opts.fundo;
-  const dec = state.opts.dec;
-  const dor = (document.getElementById('f-dor').value || '').trim();
-  const desafio = (document.getElementById('f-desafio').value || '').trim();
-  const negocio = (document.getElementById('f-negocio').value || '').trim();
-  const origem = document.getElementById('lead-origem').value || '';
+  const fluxo  = state.opts.fluxo;
+  const fundo  = state.opts.fundo;
+  const dec    = state.opts.dec;
+  const cas    = state.opts.cas;
+  const dor      = (document.getElementById('f-dor').value      || '').trim();
+  const desafio  = (document.getElementById('f-desafio').value  || '').trim();
+  const negocio  = (document.getElementById('f-negocio').value  || '').trim();
+  const origem   = document.getElementById('lead-origem').value || '';
 
-  // ── DETECÇÃO DE INCONSISTÊNCIAS / POSSÍVEL MENTIRA ──
-  let alertasMentira = [];
+  const origemQuente      = origem.includes('Quente');
+  const origemFrioAte40k  = origem.includes('Até 40K') || origem.includes('até 40');
+  const origemFrioMais40k = origem.includes('+40K') || origem.includes('+40k');
 
-  // Margem muito alta com faturamento baixo é atípico no setor fitness
-  if (fat <= 20000 && margem >= 35) {
-    alertasMentira.push('⚠️ Margem acima de 30% com faturamento abaixo de R$20k é atípico para o setor — verificar se os números são reais.');
-  }
-  // Margem altíssima em qualquer faturamento sem estrutura forte
-  if (margem >= 50 && fat < 50000) {
-    alertasMentira.push('⚠️ Margem acima de 40% com faturamento abaixo de R$50k raramente acontece em academias — questionar custos fixos declarados.');
-  }
-  // Diz que não tem dívida mas faturamento muito baixo sem reserva: inconsistente
-  if (fat <= 10000 && divida === 'nao' && margem >= 25) {
-    alertasMentira.push('⚠️ Faturamento até R$10k com margem alta e sem dívidas: verifique se o lead está confundindo faturamento com lucro.');
-  }
-  // Tem dívida + fluxo negativo + diz ter fundo: pouco provável ter reserva real
-  if (divida === 'sim' && fluxo === 'neg' && fundo === 'sim' && fat < 30000) {
-    alertasMentira.push('⚠️ Fluxo negativo com faturamento baixo e fundo de reserva declarado: checar se o fundo é real ou apenas para "passar" na triagem.');
-  }
-
-  // ── PRODUTO RECOMENDADO ──
-  // PAV exige min R$40k (usamos 50000 como faixa "R$30-50k" inclui 40k+, e 80000 é acima)
-  // Acelerador: até ~40k (usamos fat <= 30000 como centro, mas se entre 30-50k e origem frio até 40k → Acelerador)
-  let produto = '';
-  let produtoLogica = '';
-
-  const origemFrioAte40k = origem.includes('Até 40K') || origem.includes('ate 40') || origem.includes('até 40');
-  const origemFrioPlusMais40k = origem.includes('+40K') || origem.includes('+40k');
-  const origemQuente = origem.includes('Quente');
+  // ─────────────────────────────────────────────────────────────
+  // BLOCO 1 — PRODUTO RECOMENDADO
+  // Acelerador: fatura até ~40k, geralmente sozinho, faz tudo.
+  // PAV: fatura mínimo R$40k, já tem recepção/time, precisa de
+  //      estrutura de vendas, metas, retenção.
+  // ─────────────────────────────────────────────────────────────
+  let produto = '', produtoLogica = '';
 
   if (fat <= 30000) {
     produto = 'Acelerador de Matrículas — R$1.997';
-    produtoLogica = 'Faturamento até R$30k indica perfil de pequena academia/studio. Produto: Acelerador de Matrículas.';
+    produtoLogica = 'Faturamento até R$30k → perfil pequena academia/studio sem time. Produto: Acelerador.';
   } else if (fat === 50000) {
-    // faixa R$30-50k — zona de transição
     if (origemFrioAte40k) {
       produto = 'Acelerador de Matrículas — R$1.997';
-      produtoLogica = 'Origem "Funil Frio Até 40K" + faixa R$30-50k → perfil Acelerador.';
+      produtoLogica = 'Funil Frio Até 40K + faixa R$30-50k → provável perfil Acelerador.';
     } else {
       produto = 'PAV — Programa de Aceleração de Vendas — R$24.997';
-      produtoLogica = 'Faixa R$30-50k com origem neutra ou frio +40K → avaliar PAV se estrutura permitir.';
+      produtoLogica = 'Faixa R$30-50k com origem +40K ou Quente → zona de transição, avaliar PAV.';
     }
   } else {
-    // fat >= 80000 → PAV
     produto = 'PAV — Programa de Aceleração de Vendas — R$24.997';
-    produtoLogica = 'Faturamento acima de R$50k indica estrutura compatível com o PAV.';
+    produtoLogica = 'Faturamento acima de R$50k → estrutura compatível com PAV.';
   }
 
-  // ── FORMA DE NEGOCIAÇÃO RECOMENDADA ──
-  let negociacao = '';
-  const isPAV = produto.includes('PAV');
+  const isPAV       = produto.includes('PAV');
   const isAcelerador = produto.includes('Acelerador');
 
+  // ─────────────────────────────────────────────────────────────
+  // BLOCO 2 — DETECÇÃO DE INCONSISTÊNCIAS
+  // ─────────────────────────────────────────────────────────────
+  let alertasMentira = [];
+
+  if (fat <= 20000 && margem >= 35)
+    alertasMentira.push('Margem acima de 30% com faturamento abaixo de R$20k é atípico — confirmar se os números são reais.');
+  if (margem >= 50 && fat < 50000)
+    alertasMentira.push('Margem acima de 40% com faturamento abaixo de R$50k raramente ocorre em academias — questionar custos fixos declarados.');
+  if (fat <= 10000 && divida === 'nao' && margem >= 25)
+    alertasMentira.push('Faturamento até R$10k com margem alta e sem dívidas: lead pode estar confundindo faturamento com lucro.');
+  if (divida === 'sim' && fluxo === 'neg' && fundo === 'sim' && fat < 30000)
+    alertasMentira.push('Fluxo negativo + faturamento baixo + fundo declarado: checar se reserva é real ou informada para "passar" na triagem.');
+
+  // ─────────────────────────────────────────────────────────────
+  // BLOCO 3 — CAPACIDADE REAL DE PAGAMENTO
+  // Quanto o lead consegue pagar de fato com base em fat + margem
+  // ─────────────────────────────────────────────────────────────
+  const lucroEstimado = fat * (margem / 100); // R$ de lucro/mês estimado
+
+  // Para Acelerador (R$1.997): quanto representa do lucro mensal?
+  // Para PAV (R$24.997): quanto representa do lucro mensal?
+  const ticketProduto  = isAcelerador ? 1997 : 24997;
+  const mesesParaPagar = lucroEstimado > 0 ? ticketProduto / lucroEstimado : 99;
+  // Quanto menos meses de lucro para pagar, melhor a capacidade
+
+  // ─────────────────────────────────────────────────────────────
+  // BLOCO 4 — FORMA DE NEGOCIAÇÃO
+  // ─────────────────────────────────────────────────────────────
+  let negociacao = '';
+
   if (isAcelerador) {
-    // Produto de R$1.997
     if (fat <= 10000 || (divida === 'sim' && fluxo === 'neg')) {
-      negociacao = '💳 Parcelado no cartão em até 12x (R$166/mês) — faturamento muito baixo, não forçar à vista.';
-    } else if (margem >= 25 && divida === 'nao') {
-      negociacao = '💳 Cartão à vista ou em até 3x — margem saudável e sem dívidas: tentar fechar no máximo 3 parcelas.';
+      negociacao = '💳 Parcelado em até 12x no cartão (R$166/mês) — não forçar à vista, faturamento muito baixo.';
+    } else if (mesesParaPagar <= 0.5 && divida === 'nao') {
+      negociacao = '💳 Cartão à vista — lucro mensal cobre o ticket com folga. Tentar fechar à vista primeiro.';
+    } else if (mesesParaPagar <= 1 && divida === 'nao') {
+      negociacao = '💳 À vista ou em até 3x no cartão — margem saudável. Evitar parcelar muito.';
     } else {
-      negociacao = '💳 Entrada de 50% (R$998) + restante em até 6x no cartão — perfil intermediário.';
+      negociacao = '💳 Entrada de 50% (R$998) + restante em até 6x — perfil intermediário.';
     }
   } else {
-    // PAV — R$24.997
+    // PAV
     if (fat >= 80000 && margem >= 25 && divida === 'nao') {
-      negociacao = '💳 Cartão à vista ou em até 6x — faturamento e margem fortes. Tentar fechar em menos parcelas.';
+      negociacao = '💳 À vista ou em até 6x no cartão — faturamento e margem fortes. Tentar menos parcelas.';
     } else if (fat >= 50000 && (divida === 'nao' || fluxo === 'pos')) {
-      negociacao = '💳 Entrada de 30-50% no cartão + restante em até 12x — perfil PAV com capacidade moderada.';
+      negociacao = '💳 Entrada de 30-50% no cartão + restante em até 12x — capacidade moderada para PAV.';
     } else {
-      negociacao = '💳 Parcelado em até 12x no cartão (R$2.083/mês) — verificar limite disponível antes da reunião com o closer.';
+      negociacao = '💳 Parcelado em até 12x no cartão (R$2.083/mês) — verificar limite disponível com o closer antes da reunião.';
     }
   }
 
-  // ── SCORE DE PROBABILIDADE DE VENDA ──
-  let score = 0;
+  // ─────────────────────────────────────────────────────────────
+  // BLOCO 5 — FÓRMULA DE CHANCE DE COMPRA (0–95%)
+  //
+  // Dimensões avaliadas e seus pesos máximos:
+  //  A) Fit de Produto (adequação faturamento×produto)  → até 20 pts
+  //  B) Capacidade Financeira (fat + margem + dívida)   → até 25 pts
+  //  C) Motivação / Dor Oculta                          → até 20 pts
+  //  D) Consciência do Problema (desafio mapeado)       → até 10 pts
+  //  E) Processo Decisório (decisor + cônjuge)          → até 10 pts
+  //  F) Intenção de Origem (funil)                      → até 10 pts
+  //  G) Penalidades (inconsistências + risco financeiro)→ até -25 pts
+  //
+  // Total máximo bruto: 95 pts
+  // ─────────────────────────────────────────────────────────────
 
-  // Faturamento
-  if (fat >= 80000) score += 20;
-  else if (fat >= 50000) score += 15;
-  else if (fat >= 30000) score += 10;
-  else if (fat >= 10000) score += 5;
+  let scoreA = 0; // Fit de produto
+  let scoreB = 0; // Capacidade financeira
+  let scoreC = 0; // Motivação / Dor oculta
+  let scoreD = 0; // Consciência do problema
+  let scoreE = 0; // Processo decisório
+  let scoreF = 0; // Intenção / Origem
+  let scoreG = 0; // Penalidades (negativo)
 
-  // Margem
-  if (margem >= 35) score += 20;
-  else if (margem >= 25) score += 15;
-  else if (margem >= 15) score += 8;
+  // ── A) FIT DE PRODUTO (até 20 pts) ──
+  // Acelerador: ideal até 30k, aceitável até 40k, fora de fit acima disso
+  // PAV: ideal 40k+, zona de risco abaixo de 40k
+  if (isAcelerador) {
+    if (fat <= 30000 && fat >= 10000) scoreA = 20; // fit perfeito
+    else if (fat < 10000)             scoreA = 8;  // muito pequeno, risco alto de não fechar
+    else                              scoreA = 12; // entre 30-50k, zona cinza
+  } else {
+    // PAV
+    if (fat >= 80000)       scoreA = 20; // fit perfeito
+    else if (fat >= 50000)  scoreA = 15; // fit bom
+    else                    scoreA = 8;  // zona de transição, risco
+  }
 
-  // Situação financeira
-  if (!divida || divida === 'nao') score += 15;
-  else if (divida === 'sim' && fluxo === 'pos') score += 8;
-  else if (divida === 'sim' && fluxo === 'neg' && fundo === 'sim') score += 3;
+  // ── B) CAPACIDADE FINANCEIRA (até 25 pts) ──
+  // Sub-critério 1: faturamento relativo ao ticket (até 10 pts)
+  let sbFat = 0;
+  if (isAcelerador) {
+    if (fat >= 20000)      sbFat = 10;
+    else if (fat >= 10000) sbFat = 6;
+    else                   sbFat = 2; // fatura pouco, mas pode comprar (case real: 8k comprou)
+  } else {
+    if (fat >= 80000)      sbFat = 10;
+    else if (fat >= 50000) sbFat = 6;
+    else                   sbFat = 2;
+  }
 
-  // Dor oculta clara = motivação de compra real
-  if (dor.length > 40) score += 15;
-  else if (dor.length > 10) score += 8;
+  // Sub-critério 2: margem → quanto sobra de fato (até 8 pts)
+  let sbMargem = 0;
+  if (mesesParaPagar <= 0.5)       sbMargem = 8; // paga com menos de meio mês de lucro
+  else if (mesesParaPagar <= 1)    sbMargem = 6;
+  else if (mesesParaPagar <= 2)    sbMargem = 4;
+  else if (mesesParaPagar <= 3)    sbMargem = 2;
+  else                             sbMargem = 0; // precisaria de 3+ meses de lucro só para pagar
 
-  // Desafio bem definido = consciência do problema
-  if (desafio.length > 40) score += 8;
-  else if (desafio.length > 10) score += 4;
+  // Sub-critério 3: saúde financeira (até 7 pts)
+  let sbFinanceiro = 0;
+  if (!divida || divida === 'nao')                              sbFinanceiro = 7;
+  else if (divida === 'sim' && fluxo === 'pos')                 sbFinanceiro = 4;
+  else if (divida === 'sim' && fluxo === 'neg' && fundo === 'sim') sbFinanceiro = 2;
+  else                                                          sbFinanceiro = 0;
 
-  // Decisor único = menos atrito no fechamento
-  if (dec === 'unico') score += 7;
+  scoreB = sbFat + sbMargem + sbFinanceiro;
 
-  // Origem quente (webinário quente + aplicação) = intenção mais alta
-  if (origemQuente) score += 10;
-  else if (origemFrioPlusMais40k) score += 5;
+  // ── C) MOTIVAÇÃO / DOR OCULTA (até 20 pts) ──
+  // Dor oculta é o maior gatilho de fechamento — quem tem um "porquê" forte fecha mais
+  let sbDor = 0;
+  if (dor.length > 80)       sbDor = 20; // dor muito bem articulada
+  else if (dor.length > 40)  sbDor = 15;
+  else if (dor.length > 15)  sbDor = 8;
+  else if (dor.length > 0)   sbDor = 4;
+  else                       sbDor = 0;  // não mapeou dor = sinal ruim
 
-  // Penalidade por inconsistências detectadas
-  score -= (alertasMentira.length * 8);
+  scoreC = sbDor;
 
+  // ── D) CONSCIÊNCIA DO PROBLEMA (até 10 pts) ──
+  // Quem sabe descrever bem o desafio já passou pela etapa de reconhecer que precisa de ajuda
+  let sbDesafio = 0;
+  if (desafio.length > 80)      sbDesafio = 10;
+  else if (desafio.length > 40) sbDesafio = 7;
+  else if (desafio.length > 15) sbDesafio = 4;
+  else if (desafio.length > 0)  sbDesafio = 2;
+
+  scoreD = sbDesafio;
+
+  // ── E) PROCESSO DECISÓRIO (até 10 pts) ──
+  // Decisor único = fecha na hora. Precisa consultar = risco de no-show ou objeção externa
+  let sbDec = 0;
+  if (dec === 'unico' && cas === 'nao')  sbDec = 10; // único e solteiro: zero atrito
+  else if (dec === 'unico' && cas === 'sim') sbDec = 7; // cônjuge vai participar? Risco menor
+  else if (dec === 'unico')              sbDec = 8;  // único, estado civil não informado
+  else if (dec === 'outro')              sbDec = 3;  // precisa consultar: risco de perda
+
+  scoreE = sbDec;
+
+  // ── F) INTENÇÃO / ORIGEM (até 10 pts) ──
+  // Quente + preencheu aplicação = já quer, só falta ser qualificado
+  // Frio +40k = temperatura média-alta
+  // Frio até 40k = temperatura menor, precisa de mais trabalho
+  let sbOrigem = 0;
+  if (origemQuente)       sbOrigem = 10;
+  else if (origemFrioMais40k) sbOrigem = 6;
+  else if (origemFrioAte40k)  sbOrigem = 3;
+
+  scoreF = sbOrigem;
+
+  // ── G) PENALIDADES ──
+  // Inconsistências nos dados: -6 pts cada
+  scoreG -= alertasMentira.length * 6;
+
+  // Risco de crédito: se mesesParaPagar > 4, é muito difícil fechar
+  if (mesesParaPagar > 6)       scoreG -= 10;
+  else if (mesesParaPagar > 4)  scoreG -= 6;
+  else if (mesesParaPagar > 3)  scoreG -= 3;
+
+  // Sem dor oculta mapeada = SDR não encontrou o "porquê": sinal ruim
+  if (dor.length === 0) scoreG -= 5;
+
+  // Fluxo negativo sem reserva = não deveria chegar aqui, mas se chegou: punir muito
+  if (divida === 'sim' && fluxo === 'neg' && fundo === 'nao') scoreG -= 20;
+
+  // Precisa consultar decisor: risco real de perda pós-reunião
+  if (dec === 'outro') scoreG -= 4;
+
+  // ── SCORE FINAL ──
+  let score = scoreA + scoreB + scoreC + scoreD + scoreE + scoreF + scoreG;
   score = Math.max(0, Math.min(score, 95));
 
-  // ── DECISÃO FINAL ──
+  // Breakdown para diagnóstico
+  const breakdown = [
+    { label: 'Fit de Produto',        pts: scoreA, max: 20 },
+    { label: 'Capacidade Financeira', pts: scoreB, max: 25 },
+    { label: 'Motivação / Dor Oculta',pts: scoreC, max: 20 },
+    { label: 'Consciência do Problema',pts: scoreD, max: 10 },
+    { label: 'Processo Decisório',    pts: scoreE, max: 10 },
+    { label: 'Intenção / Origem',     pts: scoreF, max: 10 },
+    { label: 'Penalidades',           pts: scoreG, max: 0  },
+  ];
+
+  // ─────────────────────────────────────────────────────────────
+  // BLOCO 6 — DECISÃO FINAL
+  // ─────────────────────────────────────────────────────────────
   let resultado, badgeClass, tituloText, actions, motivo;
 
-  // Lógica de motivo base
-  let motivoBase = '';
-  if (alertasMentira.length > 0) motivoBase = alertasMentira[0];
+  // Motivo baseado nos critérios mais fracos
+  const pontosFragos = breakdown
+    .filter(d => d.max > 0 && d.pts < d.max * 0.5)
+    .map(d => `${d.label} (${d.pts}/${d.max})`);
+
+  const motivoFraco = pontosFragos.length > 0
+    ? 'Pontos fracos: ' + pontosFragos.join(', ') + '.'
+    : '';
 
   if (score >= 60) {
-    resultado = 'agendar';
+    resultado  = 'agendar';
     badgeClass = 'rbadge-ok';
     tituloText = '✅ Agendar Reunião com o Closer';
     motivo = alertasMentira.length > 0
       ? alertasMentira.join(' | ')
-      : '';
+      : motivoFraco;
     actions = [
       'Informe ao lead que ele passou para a próxima fase.',
-      'Use o script 1.5 para confirmar que ele tem o perfil.',
-      'Ofereça dois horários (manhã/tarde) para a reunião.',
+      'Ofereça dois horários (manhã/tarde) para a reunião de 1h.',
       'Confirme presença de TODOS os decisores (cônjuge incluído, se casado).',
-      `Produto indicado: ${produto}`,
-      `Negociação sugerida: ${negociacao}`,
+      `🛒 Produto indicado: ${produto}`,
+      `💳 Negociação sugerida: ${negociacao}`,
       'Envie o script completo para o closer via botão abaixo.'
     ];
   } else if (score >= 35) {
-    resultado = 'cautela';
+    resultado  = 'cautela';
     badgeClass = 'rbadge-warn';
     tituloText = '⚠️ Agendar com Cautela';
     motivo = alertasMentira.length > 0
       ? alertasMentira.join(' | ')
-      : fat < 30000
-        ? `Faturamento abaixo do ideal para o ${produto.split('—')[0].trim()}. Pode ter dificuldade no ticket.`
-        : margem < 15
-          ? 'Margem de lucro baixa. Capacidade de pagamento reduzida.'
-          : 'Perfil parcialmente qualificado. Alinhe expectativas com o closer.';
+      : motivoFraco || (fat < 30000
+          ? `Faturamento baixo para o ${produto.split('—')[0].trim()}. Pode ter dificuldade no ticket.`
+          : margem < 15
+            ? 'Margem de lucro baixa — capacidade de pagamento reduzida.'
+            : 'Perfil parcialmente qualificado. Alinhe expectativas com o closer.');
     actions = [
-      'Informe ao lead que pode estar no perfil, mas precisa confirmar alguns pontos.',
-      'AVISE O CLOSER sobre os pontos fracos antes da reunião.',
-      alertasMentira.length > 0 ? '🚨 ATENÇÃO: inconsistências nos dados — peça comprovação antes da reunião.' : 'Priorize aprofundar a dor oculta antes de agendar.',
-      `Produto indicado: ${produto}`,
-      `Negociação sugerida: ${negociacao}`,
-      'Se o faturamento crescer ou a margem melhorar, o fit melhora muito.'
-    ];
+      'Informe ao lead que pode estar no perfil, mas há pontos a confirmar.',
+      '⚠️ AVISE O CLOSER sobre os pontos fracos antes da reunião.',
+      alertasMentira.length > 0
+        ? '🚨 Inconsistências detectadas — solicite comprovação antes de avançar.'
+        : (dor.length === 0 ? 'Dor oculta não mapeada — closer deve aprofundar isso no início da reunião.' : 'Aprofunde a dor oculta se ainda não estiver clara.'),
+      `🛒 Produto indicado: ${produto}`,
+      `💳 Negociação sugerida: ${negociacao}`,
+      motivoFraco ? `📊 Lógica: ${motivoFraco}` : ''
+    ].filter(Boolean);
   } else {
-    resultado = 'nao_agendar';
+    resultado  = 'nao_agendar';
     badgeClass = 'rbadge-no';
     tituloText = '❌ Não Agendar';
     motivo = alertasMentira.length > 0
       ? alertasMentira.join(' | ')
-      : fat < 20000
-        ? 'Faturamento muito baixo. Capacidade de pagamento insuficiente para qualquer produto.'
-        : 'Lead sem qualificação suficiente no momento. Retornar em 60-90 dias.';
+      : fat < 20000 && mesesParaPagar > 4
+        ? 'Faturamento muito baixo + margem insuficiente. Não tem capacidade de pagamento real agora.'
+        : motivoFraco || 'Lead sem qualificação suficiente no momento.';
     actions = [
       'NÃO agende reunião com o closer agora.',
       'Encerre a ligação de forma respeitosa e profissional.',
-      'Informe que o momento atual não é o ideal para o programa.',
-      alertasMentira.length > 0 ? '🚨 Dados inconsistentes identificados — não avançar até esclarecer.' : 'Cadastre-o na base de nurturing para follow-up em 60-90 dias.',
-      'Motivo da lógica: ' + motivo
+      alertasMentira.length > 0
+        ? '🚨 Dados inconsistentes — não avançar até esclarecer.'
+        : 'Cadastre-o na base de nurturing para follow-up em 60-90 dias.',
+      `📊 Lógica do diagnóstico: ${motivo}`
     ];
   }
 
   return {
     resultado, badgeClass, tituloText, produto, score, motivo, actions,
-    alertasMentira, negociacao, produtoLogica
+    alertasMentira, negociacao, produtoLogica, breakdown
   };
 }
 
@@ -1177,6 +1305,27 @@ function goToResultado() {
   al.innerHTML = data.actions.map((a, i) =>
     `<li><div class="action-num">${i+1}</div><div>${a}</div></li>`
   ).join('');
+
+  // Breakdown das dimensões da fórmula
+  const breakEl = document.getElementById('r-breakdown-list');
+  if (breakEl && data.breakdown) {
+    breakEl.innerHTML = data.breakdown.map(d => {
+      const pct = d.max > 0 ? Math.max(0, Math.min(100, (d.pts / d.max) * 100)) : 0;
+      const barColor = d.max === 0
+        ? (d.pts < 0 ? '#ef4444' : '#64748b')
+        : pct >= 70 ? '#16c784' : pct >= 40 ? '#f59e0b' : '#ef4444';
+      const ptsLabel = d.max === 0 ? `${d.pts} pts` : `${d.pts}/${d.max} pts`;
+      return `<li style="padding:8px 0;border-bottom:1px solid var(--border)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+          <span style="font-size:13px;color:var(--text);font-weight:500">${d.label}</span>
+          <span style="font-family:'DM Mono',monospace;font-size:12px;color:${barColor};font-weight:700">${ptsLabel}</span>
+        </div>
+        ${d.max > 0 ? `<div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden">
+          <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;transition:width .5s ease"></div>
+        </div>` : ''}
+      </li>`;
+    }).join('');
+  }
 
   window.scrollTo({top:0,behavior:'smooth'});
 }
