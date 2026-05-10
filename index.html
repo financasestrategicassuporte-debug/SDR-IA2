@@ -607,7 +607,7 @@ tr:hover td { background:rgba(255,255,255,.015); }
       <div class="script-block">
         <span class="script-label">🎙 FALE ISSO</span>
         <div class="script-text">
-          Deixa eu te perguntar: você é a pessoa que pode <strong>tomar a decisão</strong> de entrar ou não no programa, ou você precisa consultar alguém para tomar essa decisão? Um sócio, esposa, o financeiro ou alguma outra pessoa...
+          Deixa eu te perguntar: caso no final dessa <strong>1 hora de consultoria gratuita</strong> nós apresentássemos uma solução — e não quer dizer que vamos, pois não é o foco inicial — você é a pessoa que pode <strong>tomar a decisão</strong> de entrar ou não no programa, ou você precisa consultar alguém para tomar essa decisão? Um sócio, esposa, o financeiro ou alguma outra pessoa...
         </div>
       </div>
 
@@ -956,10 +956,6 @@ function computeResultado() {
   if (fat <= 10000 && divida === 'nao' && margem >= 25) {
     alertasMentira.push('⚠️ Faturamento até R$10k com margem alta e sem dívidas: verifique se o lead está confundindo faturamento com lucro.');
   }
-  // Expectativa de crescimento desproporcional (mais que 3x o faturamento atual)
-  if (fatEsp > 0 && fat > 0 && fatEsp > fat * 3) {
-    alertasMentira.push('⚠️ Faturamento esperado mais de 3x acima do atual — expectativa pode estar inflada. Alinhar realidade antes de avançar.');
-  }
   // Tem dívida + fluxo negativo + diz ter fundo: pouco provável ter reserva real
   if (divida === 'sim' && fluxo === 'neg' && fundo === 'sim' && fat < 30000) {
     alertasMentira.push('⚠️ Fluxo negativo com faturamento baixo e fundo de reserva declarado: checar se o fundo é real ou apenas para "passar" na triagem.');
@@ -1287,6 +1283,9 @@ ${desafio || 'Não preenchido'}
 DOR OCULTA:
 ${dor || 'Não preenchido'}
 
+🎯 ORIENTAÇÃO PARA O CLOSER (baseado na dor oculta):
+${dor ? `O lead sinalizou que sua motivação real é: "${dor}". Use esse gatilho para conduzir a reunião — puxe para essa dor nos momentos de objeção e ancore o valor do programa na transformação que ele quer para a vida dele, não apenas nos números do negócio. Principais pontos a explorar na reunião: (1) como a situação atual está impedindo esse sonho/objetivo; (2) o que muda na vida dele quando resolver esse problema; (3) o quanto ele está disposto a investir para chegar lá.` : 'Dor oculta não mapeada — o closer deve aprofundar esse ponto logo no início da reunião antes de apresentar qualquer solução.'}
+
 ────────────────────────────────────────
 RESULTADO
 ────────────────────────────────────────
@@ -1327,7 +1326,11 @@ function copyWhatsapp() {
   const fat = document.getElementById('f-faturamento').value;
   const fatMap = {'10000':'Até R$10k','20000':'R$10-20k','30000':'R$20-30k','50000':'R$30-50k','80000':'R$50-80k','120000':'R$80-120k','200000':'R$120-200k','300000':'Acima R$200k'};
 
-  const msg = `🎯 *NOVO LEAD QUALIFICADO — GFB*\n\n*Nome:* ${nome}\n*Empresa:* ${empresa}\n*Faturamento:* ${fatMap[fat] || '—'}\n*Desafio:* ${desafio || '—'}\n*Dor Oculta:* ${dor || '—'}\n\n✅ *Resultado:* ${data.tituloText}\n🛒 *Produto:* ${data.produto}\n💳 *Negociação:* ${data.negociacao || '—'}\n📊 *Chance:* ${data.score}%\n\n${data.motivo ? '⚠️ _Diagnóstico: '+data.motivo+'_\n' : ''}${data.alertasMentira && data.alertasMentira.length > 0 ? '\n🚨 *Alertas:* ' + data.alertasMentira.join(' | ') : ''}`;
+  const dorCloser = dor
+    ? `🎯 *Orientação para a reunião:* A dor oculta do lead é "${dor}". Puxe para esse ponto nos momentos de objeção e ancore o valor do programa nessa transformação.`
+    : `🎯 *Orientação para a reunião:* Dor oculta não mapeada — aprofunde esse ponto logo no início antes de apresentar qualquer solução.`;
+
+  const msg = `🎯 *NOVO LEAD QUALIFICADO — GFB*\n\n*Nome:* ${nome}\n*Empresa:* ${empresa}\n*Faturamento:* ${fatMap[fat] || '—'}\n*Desafio:* ${desafio || '—'}\n*Dor Oculta:* ${dor || '—'}\n\n✅ *Resultado:* ${data.tituloText}\n🛒 *Produto:* ${data.produto}\n💳 *Negociação:* ${data.negociacao || '—'}\n📊 *Chance:* ${data.score}%\n\n${dorCloser}\n\n${data.motivo ? '⚠️ _Diagnóstico: '+data.motivo+'_\n' : ''}${data.alertasMentira && data.alertasMentira.length > 0 ? '\n🚨 *Alertas:* ' + data.alertasMentira.join(' | ') : ''}`;
 
   navigator.clipboard.writeText(msg).then(() => {
     alert('Mensagem copiada! Cole no WhatsApp do closer.');
