@@ -1153,7 +1153,7 @@ function computeResultado() {
   if (divida === 'sim' && fluxo === 'neg' && fundo === 'nao') scoreH -= 20;
   if (dec === 'outro' && decisor2 !== 'sim') scoreH -= 6;
   else if (dec === 'outro') scoreH -= 2;
-  if (prior === '1ano') scoreH -= 8;
+  if (prior === '1ano') scoreH -= 25;
   else if (prior === '6meses') scoreH -= 3;
 
   let score = scoreA + scoreB + scoreC + scoreD + scoreE + scoreF + scoreG + scoreH;
@@ -1195,12 +1195,13 @@ function computeResultado() {
       'Envie o script completo para o closer via botão abaixo.'
     ];
     if (decisorAlerta) actions.splice(2, 0, decisorAlerta);
-  } else if (score >= 35) {
+  } else if (score >= 35 && prior !== '1ano') {
     resultado = 'cautela'; badgeClass = 'rbadge-warn'; tituloText = '⚠️ Agendar com Cautela';
     actions = [
       'Informe ao lead que pode estar no perfil, mas há pontos a confirmar.',
       '⚠️ AVISE O CLOSER sobre os pontos fracos antes da reunião.',
       criticos > 0 ? '🚨 Inconsistências críticas detectadas — solicite comprovação antes de avançar.' : (dor.length === 0 ? 'Dor oculta não mapeada — closer deve aprofundar no início da reunião.' : 'Aprofunde a dor oculta se ainda não estiver clara.'),
+      prior === '6meses' ? '⚠️ URGÊNCIA BAIXA: lead disse que vai resolver em 6 meses. Só agendar se houver razão concreta para não agir agora. Avise o closer.' : '',
       `🛒 Produto indicado: ${produto}`,
       `💳 Negociação sugerida: ${negociacao}`,
       `⏰ Prioridade do lead: ${priorLabel}`,
@@ -1208,11 +1209,21 @@ function computeResultado() {
     ].filter(Boolean);
     if (decisorAlerta) actions.splice(1, 0, decisorAlerta);
   } else {
-    resultado = 'nao_agendar'; badgeClass = 'rbadge-no'; tituloText = '❌ Não Agendar';
+    resultado = 'nao_agendar'; badgeClass = 'rbadge-no';
+    tituloText = prior === '1ano'
+      ? '❌ Não Agendar — Sem Urgência'
+      : '❌ Não Agendar';
     actions = [
       'NÃO agende reunião com o closer neste momento.',
+      prior === '1ano'
+        ? '🚨 MOTIVO PRINCIPAL: lead declarou que só vai agir em 1 ano ou mais. Sem urgência real, a reunião não vai fechar — e provavelmente nem vai acontecer (no-show). Não há lógica em agendar.'
+        : prior === '6meses'
+          ? '⚠️ Urgência insuficiente: lead quer resolver em 6 meses, mas o score financeiro/BANT está fraco demais para compensar essa falta de urgência. Não agendar agora.'
+          : criticos > 0
+            ? '🚨 Dados críticos inconsistentes — não avançar até esclarecer.'
+            : 'Score insuficiente de qualificação geral.',
       'Encerre a ligação de forma respeitosa e profissional.',
-      criticos > 0 ? '🚨 Dados críticos inconsistentes — não avançar até esclarecer.' : 'Cadastre-o na base de nurturing para follow-up em 60-90 dias.',
+      'Cadastre na base de nurturing para follow-up em 60-90 dias.',
       `⏰ Prioridade declarada: ${priorLabel}`,
     ];
     if (decisorAlerta) actions.splice(2, 0, decisorAlerta);
@@ -1258,13 +1269,13 @@ function computeResultado() {
     {
       label: '⏰ Urgência (Timeline)',
       text: prior === 'urgente'
-        ? 'Lead declarou urgência imediata. Excelente sinal — maior probabilidade de decisão na reunião.'
+        ? '✅ Lead declarou urgência imediata — quer resolver agora. Excelente sinal. Alta probabilidade de decisão na reunião. Agendar com prioridade.'
         : prior === '6meses'
-          ? 'Lead declarou urgência nos próximos 6 meses. Risco moderado de adiamento. Closer deve criar urgência logo no início da reunião.'
+          ? '⚠️ Lead declarou que pretende resolver nos próximos 6 meses. ATENÇÃO: se não é urgente agora, não há razão real para agendar a reunião hoje. Leads sem urgência têm alta taxa de no-show, cancelamento ou "não é o momento" na hora H. Antes de agendar, o SDR precisa descobrir o que está impedindo de agir agora — se a resposta for vaga, NÃO agendar. Só agendar se o lead der uma razão concreta e válida (ex: "termino uma reforma em 30 dias"). Avise o closer sobre essa fragilidade.'
           : prior === '1ano'
-            ? '🚨 Lead declarou prazo de 1 ano ou mais. Altíssimo risco de no-show ou "não é o momento". Não agendar sem um motivo muito concreto de urgência.'
-            : 'Urgência não declarada — este ponto deve ser aprofundado.',
-      color: bantT === 'ok' ? 'ok' : bantT === 'warn' ? '' : 'danger'
+            ? '🚨 Lead declarou que só vai agir daqui 1 ano ou mais. Isso inviabiliza o agendamento. Quem não sente urgência agora não vai aparecer na reunião — e mesmo que apareça, não vai fechar. A lógica é simples: se o problema não precisa ser resolvido hoje, por que ele pagaria pelo programa hoje? NÃO AGENDAR. Cadastrar na base de nurturing para follow-up em 60-90 dias e rever quando a urgência mudar.'
+            : '⚠️ Urgência não declarada — este ponto não foi mapeado. Sem saber a urgência do lead, o risco de no-show é alto. O closer deve abordar isso no início da reunião.',
+      color: prior === 'urgente' ? 'ok' : prior === '1ano' ? 'danger' : 'warn'
     },
     pontosFragos.length > 0 ? {
       label: '⚠️ Pontos Fracos Identificados',
