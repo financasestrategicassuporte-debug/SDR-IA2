@@ -1,7 +1,8 @@
-export default function handler(req, res) {
+module.exports = function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Cache-Control', 'no-store');
   res.json({
-    url: process.env.SUPABASE_URL || '',
-    key: process.env.ANON_KEY || ''
+    supabaseUrl: process.env.SUPABASE_URL || '',
+    supabaseAnonKey: process.env.ANON_KEY || ''
   });
-}
+};
